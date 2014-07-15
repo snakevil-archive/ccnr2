@@ -34,12 +34,15 @@ class Chapter extends ccnr2\Utility\PageDriver
     {
         $clob = iconv('gbk', 'utf-8//TRANSLIT', $clob);
         $a_ret = array();
-        $s_regex = '@<h1><a href=".+">\S+</a>\s*(?:|正文\s+)(.+)</h1>@Ui';
+        $s_regex = '@<h1><a href=".+">\S+</a>\s*(?:|正文\s+)([^<]+)</h1>@Ui';
         $a_match = $this->estrstr($clob, $s_regex);
         if (!isset($a_match[1])) {
             throw new ccnr2\Driver\ExChapterTitleNotFound($this->ref, $s_regex);
         }
-        $a_ret['title'] = $a_match[1];
+        $a_ret['title'] = trim($a_match[1]);
+        if ('正文' == substr($a_ret['title'], 0, 6)) {
+            $a_ret['title'] = trim(substr($a_ret['title'], 6));
+        }
         $s_regex = '|<div class="bottomlink">|';
         $a_match = $this->estrstr($clob, $s_regex, true);
         if (false === $a_match) {
