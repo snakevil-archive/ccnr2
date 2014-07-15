@@ -1,0 +1,13 @@
+.*
+/*
+
+!.gitattributes
+!.gitignore
+!composer.json
+
+!etc/
+!include/
+!lib/
+!libexec/
+!share/
+!var/

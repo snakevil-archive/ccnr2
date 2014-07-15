@@ -1,0 +1,5 @@
+*.xml   eol=lf
+*.js    eol=lf
+*.json  eol=lf
+*.css   eol=lf
+*.php   eol=lf

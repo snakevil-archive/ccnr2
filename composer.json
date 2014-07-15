@@ -1,0 +1,33 @@
+{
+    "name": "snakevil/ccnr2",
+    "description": "Clear & Clean Novel Reader v2",
+    "type": "project",
+    "license": [
+        "GPL-3.0+",
+        "CC-BY-NC-ND-3.0"
+    ],
+    "authors": [
+        {
+            "name": "Snakevil Zen",
+            "email": "zsnakevil@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo_sqlite": "*",
+        "zen/core": "@dev",
+        "zen/web-application": "@dev",
+        "zen/model": "@dev",
+        "zen/view": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "snakevil\\ccnr2\\": "lib/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "vendor-dir": "include",
+        "bin-dir": "bin",
+        "notify-on-install": false
+    }
+}
