@@ -26,7 +26,11 @@
 
   <xsl:template match="/Chapter">
     <xsl:call-template name="page">
-      <xsl:with-param name="title" select="Title" />
+      <xsl:with-param name="title">
+        <xsl:value-of select="$novel/Title" />
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="Title" />
+      </xsl:with-param>
       <xsl:with-param name="author" select="$novel/Author" />
       <xsl:with-param name="content">
         <article class="container">

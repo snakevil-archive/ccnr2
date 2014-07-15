@@ -10,9 +10,12 @@
       <meta charset="utf-8" />
       <meta
         name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
       />
-      <title><xsl:value-of select="$title" /></title>
+      <title>
+        <xsl:value-of select="$title" />
+        <xsl:text><![CDATA[ | CCNR v2]]></xsl:text>
+      </title>
       <meta name="author">
         <xsl:attribute name="content">
           <xsl:value-of select="$author" />
