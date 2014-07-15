@@ -31,6 +31,13 @@ abstract class PageDriver extends ZenCore\Component implements ArrayAccess
     protected $metas;
 
     /**
+     * 远端页面地址。
+     *
+     * @var string
+     */
+    protected $ref;
+
+    /**
      * 判断指定元素是否存在。
      *
      * @param  scalar $offset 元素名
@@ -79,9 +86,11 @@ abstract class PageDriver extends ZenCore\Component implements ArrayAccess
      * 构造函数
      *
      * @param string $clob 待分析地内容代码
+     * @param string $ref  远端页面地址
      */
-    final public function __construct($clob)
+    final public function __construct($clob, $ref)
     {
+        $this->ref = $ref;
         $this->metas = $this->parse($clob);
     }
 

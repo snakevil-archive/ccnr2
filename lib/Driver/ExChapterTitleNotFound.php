@@ -17,7 +17,7 @@ namespace snakevil\ccnr2\Driver;
  * @version 2.0.0
  * @since   2.0.0
  *
- * @method void __construct(\Exception $prev = null) 构造函数
+ * @method void __construct(string $uri, string $pattern, \Exception $prev = null) 构造函数
  */
 final class ExChapterTitleNotFound extends Exception
 {
@@ -26,5 +26,12 @@ final class ExChapterTitleNotFound extends Exception
      *
      * @var string
      */
-    protected static $template = '无法找到章节标题。';
+    protected static $template = '页面“%uri$s”匹配“%pattern$s”章节标题失败。';
+
+    /**
+     * {@inheritdoc}
+     *
+     * @var string[]
+     */
+    protected static $contextSequence = array('uri', 'pattern');
 }

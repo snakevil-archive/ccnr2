@@ -35,26 +35,31 @@ class Toc extends ccnr2\Utility\PageDriver
     {
         $clob = iconv('gbk', 'utf-8//TRANSLIT', $clob);
         $a_ret = array();
-        $a_match = $this->estrstr($clob, '|<title>(\S+)最新章节,|U');
+        $s_regex = '|<title>(\S+)最新章节,|U';
+        $a_match = $this->estrstr($clob, $s_regex);
         if (!isset($a_match[1])) {
-            throw new ccnr2\Driver\ExNovelTitleNotFound;
+            throw new ccnr2\Driver\ExNovelTitleNotFound($this->ref, $s_regex);
         }
         $a_ret['title'] = $a_match[1];
-        $a_match = $this->estrstr($clob, '|<meta name="author" content="(\S+)" />|U');
+        $s_regex = '|<meta name="author" content="(\S+)" />|U';
+        $a_match = $this->estrstr($clob, $s_regex);
         if (!isset($a_match[1])) {
-            throw new ccnr2\Driver\ExNovelAuthorNotFound;
+            throw new ccnr2\Driver\ExNovelAuthorNotFound($this->ref, $s_regex);
         }
         $a_ret['author'] = $a_match[1];
-        $a_match = $this->estrstr($clob, '|<div class="list">正文</div>|');
+        $s_regex = '|<div class="list">正文</div>|';
+        $a_match = $this->estrstr($clob, $s_regex);
         if (false === $a_match) {
-            throw new ccnr2\Driver\ExNovelChaptersNotFound;
+            throw new ccnr2\Driver\ExNovelChaptersNotFound($this->ref, $s_regex);
         }
-        $a_match = $this->estrstr($clob, '|<div class="bottom">\s+①若读者发现有小说|U', true);
+        $s_regex = '|<div class="bottom">\s+①若读者发现有小说|U';
+        $a_match = $this->estrstr($clob, $s_regex, true);
         if (false === $a_match) {
-            throw new ccnr2\Driver\ExNovelChaptersNotFound;
+            throw new ccnr2\Driver\ExNovelChaptersNotFound($this->ref, $s_regex);
         }
-        if (false === preg_match_all('|<li><a href="(\d+\.html)">(.+)</a></li>|U', $clob, $a_match)) {
-            throw new ccnr2\Driver\ExNovelChaptersNotFound;
+        $s_regex = '|<li><a href="(\d+\.html)">(.+)</a></li>|U';
+        if (false === preg_match_all($s_regex, $clob, $a_match)) {
+            throw new ccnr2\Driver\ExNovelChaptersNotFound($this->ref, $s_regex);
         }
         $a_ret['chapters'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {

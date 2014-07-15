@@ -64,7 +64,7 @@ abstract class Page extends ZenCore\Component
             throw new ExPageDriverMissing($a_parts['host']);
         }
         list($o_time, $s_lob) = self::curl($uri);
-        $o_this = new static(new $c_driver($s_lob));
+        $o_this = new static(new $c_driver($s_lob, $uri));
         $o_this->lastModified = $o_time;
 
         return $o_this;

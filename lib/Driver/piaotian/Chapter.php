@@ -34,17 +34,20 @@ class Chapter extends ccnr2\Utility\PageDriver
     {
         $clob = iconv('gbk', 'utf-8//TRANSLIT', $clob);
         $a_ret = array();
-        $a_match = $this->estrstr($clob, '@<h1><a href=".+">\S+</a>\s*(?:|正文\s+)(\S+)</h1>@Ui');
+        $s_regex = '@<h1><a href=".+">\S+</a>\s*(?:|正文\s+)(.+)</h1>@Ui';
+        $a_match = $this->estrstr($clob, $s_regex);
         if (!isset($a_match[1])) {
-            throw new ccnr2\Driver\ExChapterTitleNotFound;
+            throw new ccnr2\Driver\ExChapterTitleNotFound($this->ref, $s_regex);
         }
         $a_ret['title'] = $a_match[1];
-        $a_match = $this->estrstr($clob, '|<div class="bottomlink">|', true);
+        $s_regex = '|<div class="bottomlink">|';
+        $a_match = $this->estrstr($clob, $s_regex, true);
         if (false === $a_match) {
-            throw new ccnr2\Driver\ExChapterParagraphsNotFound;
+            throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
         }
-        if (false === preg_match_all('@(?:&nbsp;){4}(.+)(?:<br(?:| /)>|\n</div>)@U', $clob, $a_match)) {
-            throw new ccnr2\Driver\ExChapterParagraphsNotFound;
+        $s_regex = '@(?:&nbsp;){4}(.+)(?:<br(?:| /)>|\n</div>)@U';
+        if (false === preg_match_all($s_regex, $clob, $a_match)) {
+            throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
         }
         $a_ret['paragraphs'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
