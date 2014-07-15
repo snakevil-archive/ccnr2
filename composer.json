@@ -13,8 +13,9 @@
         }
     ],
     "require": {
-        "ext-dom": "*",
         "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-SimpleXML": "*",
         "ext-xmlwriter": "*",
         "ext-xsl": "*",
         "zen/core": "@dev",

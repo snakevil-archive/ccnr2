@@ -18,11 +18,14 @@ use snakevil\ccnr2;
  * @package snakevil\ccnr2
  * @version 2.0.0
  * @since   2.0.0
- *
- * @throws ExUnknownNovelCode 当小说代号无法识别时
  */
 class NovelIndex extends ccnr2\Component\Controller
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @return ccnr2\View\TOC
+     */
     protected function onGet()
     {
         return new ccnr2\View\TOC(

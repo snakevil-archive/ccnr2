@@ -53,12 +53,12 @@ class Toc extends ccnr2\Utility\PageDriver
         if (false === $a_match) {
             throw new ccnr2\Driver\ExNovelChaptersNotFound;
         }
-        if (false === preg_match_all('|<li><a href="(\d+\.html)">(.+)</a></li>|U', $clob, $a_match)) {
+        if (false === preg_match_all('|<li><a href="(\d+)\.html">(.+)</a></li>|U', $clob, $a_match)) {
             throw new ccnr2\Driver\ExNovelChaptersNotFound;
         }
         $a_ret['chapters'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
-            $a_ret['chapters'][$a_match[1][$ii]] = $a_match[2][$ii];
+            $a_ret['chapters']['pt' . $a_match[1][$ii]] = $a_match[2][$ii];
         }
 
         return $a_ret;

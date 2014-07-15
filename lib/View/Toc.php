@@ -42,7 +42,7 @@ class Toc extends ZenView\View
 XML;
         foreach ($params['novel']->getChapters() as $o_chapter) {
             $s_xml .= <<<XML
-    <Chapter id="{$o_chapter['id']}"><![CDATA[{$o_chapter['title']}]]></Chapter>
+    <Chapter ref="{$o_chapter['ref']}"><![CDATA[{$o_chapter['title']}]]></Chapter>
 
 XML;
         }
@@ -51,6 +51,7 @@ XML;
 </Novel>
 
 XML;
+
         $o_xml = new DOMDocument;
         $o_xml->loadXml($s_xml);
         $o_xsl = new DOMDocument;

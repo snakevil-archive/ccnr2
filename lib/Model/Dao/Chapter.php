@@ -10,8 +10,7 @@
 
 namespace snakevil\ccnr2\Model\Dao;
 
-use DOMDocument;
-use DOMXPath;
+use SimpleXMLElement;
 
 use snakevil\ccnr2;
 
@@ -43,13 +42,13 @@ class Chapter extends ccnr2\Component\Dao
         if (ccnr2\Model\ChapterSet::OP_EQ != $conditions['novel'][0][0]) {
             throw new ExConditionNotSupported('novel', $conditions['novel'][0][0]);
         }
-        Novel::singleton()->read($conditions['novel'][0][1]);
-        $o_dom = new DOMDocument;
-        $o_dom->load('var/cache/' . $conditions['novel'][0][1] . '/toc.xml', LIBXML_NOCDATA);
-        $o_xp = new DOMXPath($o_dom);
-        $o_nodes = $o_xp->query('/Novel/Chapters/Chapter');
+        $p_toc = 'var/cache/' . $conditions['novel'][0][1] . '/toc.xml';
+        if (!is_file($p_toc)) {
+            Novel::singleton()->read($conditions['novel'][0][1]);
+        }
+        $o_sxe = new SimpleXMLElement($p_toc, LIBXML_NOCDATA, true);
 
-        return $o_nodes->length;
+        return count($o_sxe->xpath('/Novel/Chapters/Chapter'));
     }
 
     /**
@@ -76,16 +75,16 @@ class Chapter extends ccnr2\Component\Dao
         if (!is_file($p_toc)) {
             Novel::singleton()->read($conditions['novel'][0][1]);
         }
-        $o_dom = new DOMDocument;
-        $o_dom->load($p_toc, LIBXML_NOCDATA);
-        $o_xp = new DOMXPath($o_dom);
-        $o_nodes = $o_xp->query('/Novel/Chapters/Chapter');
+        $o_sxe = new SimpleXMLElement($p_toc, LIBXML_NOCDATA, true);
         $a_ret = array();
-        foreach ($o_nodes as $o_node) {
+        $ii = 0;
+        foreach ($o_sxe->xpath('/Novel/Chapters/Chapter') as $o_node) {
             $a_ret[] = array(
-                'id' => $o_node->getAttribute('id'),
-                'title' => $o_node->textContent,
-                'novel' => $conditions['novel'][0][1]
+                'id' => $conditions['novel'][0][1] . '#' . (++$ii),
+                'title' => $o_node,
+                'ref' => $o_node->xpath['@ref'][0],
+                'novel' => $conditions['novel'][0][1],
+                'paragraphs' => '[]'
             );
         }
 
