@@ -26,6 +26,76 @@ class Chapter extends ccnr2\Component\Dao
     /**
      * {@inheritdoc}
      *
+     * @param  scalar   $id 编号
+     * @return scalar[]
+     */
+    public function read($id)
+    {
+        list($s_novel, $s_chapter) = explode('#', $id);
+        $p_chapter = 'var/cache/' . $s_novel . '/' . $s_chapter . '.xml';
+        $a_ret = array(
+            'id' => $id,
+            'novel' => $s_novel
+        );
+        if (is_file($p_chapter)) {
+            $o_sxe = new SimpleXMLElement($p_chapter, LIBXML_NOCDATA, true);
+            $a_ret['ref'] = $o_sxe->xpath('/Chapter/@ref')[0];
+            $a_ret['title'] = $o_sxe->xpath('/Chapter/Title')[0];
+            $a_pgs = array();
+            foreach ($o_sxe->xpath('/Chapter/Paragraphs/Paragraph') as $ii) {
+                $a_pgs[] = (string) $ii;
+            }
+            $a_ret['paragraphs'] = json_encode($a_pgs);
+        } else {
+            $p_src = 'var/cache/' . $s_novel . '/SOURCE';
+            if (!is_file($p_src) || !is_readable($p_src)) {
+                throw new ExTocDataBroken($s_novel);
+            }
+            $p_toc = 'var/cache/' . $s_novel . '/toc.xml';
+            if (!is_file($p_toc)) {
+                Novel::singleton()->read($s_novel);
+            }
+            $o_sxe = new SimpleXMLElement($p_toc, LIBXML_NOCDATA, true);
+            $a_ret['ref'] = $o_sxe->xpath('/Novel/Chapters/Chapter[position()=' . $s_chapter . ']/@ref')[0];
+            $o_chapter = ccnr2\Utility\ChapterPage::parse(trim(file_get_contents($p_src)) . $a_ret['ref']);
+            $a_xml = array(
+                'name' => 'Chapter',
+                'attributes' => array(
+                    'ref' => $a_ret['ref']
+                ),
+                'children' => array(
+                    array(
+                        'name' => 'Title',
+                        'cdata' => $o_chapter->title
+                    ),
+                    array(
+                        'name' => 'Paragraphs',
+                        'children' => array()
+                    )
+                )
+            );
+            $a_pgs = array();
+            foreach ($o_chapter->paragraphs as $ii) {
+                $a_xml['children'][1]['children'][] = array(
+                    'name' => 'Paragraph',
+                    'cdata' => $ii
+                );
+                $a_pgs[] = $ii;
+            }
+            $s_lob = $this->xml($a_xml);
+            if (!file_put_contents($p_chapter, $s_lob)) {
+                throw new ExChapterDataBroken($id);
+            }
+            $a_ret['title'] = $o_chapter->title;
+            $a_ret['paragraphs'] = json_encode($a_pgs);
+        }
+
+        return $a_ret;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param  array[] $conditions 条件
      * @param  int     $limit      可选。集合大小限制
      * @param  int     $offset     可选。集合起始偏移量
@@ -82,7 +152,7 @@ class Chapter extends ccnr2\Component\Dao
             $a_ret[] = array(
                 'id' => $conditions['novel'][0][1] . '#' . (++$ii),
                 'title' => $o_node,
-                'ref' => $o_node->xpath['@ref'][0],
+                'ref' => $o_node->xpath('@ref')[0],
                 'novel' => $conditions['novel'][0][1],
                 'paragraphs' => '[]'
             );

@@ -19,12 +19,23 @@ use snakevil\ccnr2;
  * @version 2.0.0
  * @since   2.0.0
  *
- * @property-read string $id     章节编号
- * @property-read string $title  章节标题
- * @property-read Novel  $novel  隶属小说
+ * @property-read string   $id         章节编号
+ * @property-read string   $ref        来源网站引用编号
+ * @property-read string   $title      章节标题
+ * @property-read Novel    $novel      隶属小说
+ * @property-read string[] $paragraphs 段落集合
  */
 class Chapter extends ccnr2\Component\Model
 {
+    /**
+     * 来源网站引用编号。
+     *
+     * @internal
+     *
+     * @var string
+     */
+    protected $ref;
+
     /**
      * 小说标题。
      *
@@ -44,6 +55,15 @@ class Chapter extends ccnr2\Component\Model
     protected $novel;
 
     /**
+     * 段落集合。
+     *
+     * @internal
+     *
+     * @var string[]
+     */
+    protected $paragraphs;
+
+    /**
      * {@inheritdoc}
      *
      * @internal
@@ -55,11 +75,17 @@ class Chapter extends ccnr2\Component\Model
     {
         switch ($property) {
             case 'id':
+            case 'ref':
             case 'title':
                 break;
             case 'novel':
                 if (!$this->novel instanceof Novel) {
                     $this->novel = Novel::load($this->novel);
+                }
+                break;
+            case 'paragraphs':
+                if (!is_array($this->paragraphs)) {
+                    $this->paragraphs = json_decode($this->paragraphs);
                 }
                 break;
             default:
@@ -79,15 +105,5 @@ class Chapter extends ccnr2\Component\Model
     protected function newDao()
     {
         return Dao\Chapter::singleton();
-    }
-
-    /**
-     * 获取所有章节集合。
-     *
-     * @return ChapterSet
-     */
-    public function getParagraphs()
-    {
-        return ParagraphSet::all()->filterEq('chapter', $this);
     }
 }

@@ -37,7 +37,7 @@ class Toc extends ccnr2\Utility\PageDriver
         $a_ret = array();
         $a_match = $this->estrstr($clob, '|<title>(\S+)最新章节,|U');
         if (!isset($a_match[1])) {
-            throw new ccnr2\Driver\ExTitleNotFound;
+            throw new ccnr2\Driver\ExNovelTitleNotFound;
         }
         $a_ret['title'] = $a_match[1];
         $a_match = $this->estrstr($clob, '|<meta name="author" content="(\S+)" />|U');
@@ -53,12 +53,12 @@ class Toc extends ccnr2\Utility\PageDriver
         if (false === $a_match) {
             throw new ccnr2\Driver\ExNovelChaptersNotFound;
         }
-        if (false === preg_match_all('|<li><a href="(\d+)\.html">(.+)</a></li>|U', $clob, $a_match)) {
+        if (false === preg_match_all('|<li><a href="(\d+\.html)">(.+)</a></li>|U', $clob, $a_match)) {
             throw new ccnr2\Driver\ExNovelChaptersNotFound;
         }
         $a_ret['chapters'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
-            $a_ret['chapters']['pt' . $a_match[1][$ii]] = $a_match[2][$ii];
+            $a_ret['chapters'][$a_match[1][$ii]] = $a_match[2][$ii];
         }
 
         return $a_ret;

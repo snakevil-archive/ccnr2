@@ -72,7 +72,7 @@ class Novel extends ccnr2\Component\Dao
                 );
             }
             $s_lob = $this->xml($a_xml);
-            if (!file_put_contents('var/cache/' . $id . '/toc.xml', $s_lob)) {
+            if (!file_put_contents($p_toc, $s_lob)) {
                 throw new ExTocDataBroken($id);
             }
             $a_ret['title'] = $o_toc->title;
