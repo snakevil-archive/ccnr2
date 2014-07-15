@@ -74,8 +74,6 @@ class TocPage extends Page
             case 'chapters':
                 $this->$property = $this->driver[$property];
                 break;
-            case 'lastModified':
-                break;
             default:
                 return;
         }

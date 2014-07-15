@@ -43,6 +43,18 @@ abstract class Page extends ZenCore\Component
     protected $lastModified;
 
     /**
+     * 获取最后更新时间。
+     *
+     * @internal
+     *
+     * @return ZenCore\Type\DateTime
+     */
+    protected function zenGetlastModified()
+    {
+        return $this->lastModified;
+    }
+
+    /**
      * 解析指定页面地址。
      *
      * @param  string $uri 页面地址

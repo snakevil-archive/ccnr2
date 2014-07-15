@@ -86,6 +86,7 @@ class Chapter extends ccnr2\Component\Dao
             if (!file_put_contents($p_chapter, $s_lob)) {
                 throw new ExChapterDataBroken($id);
             }
+            touch($p_chapter, $o_chapter->lastModified->getTimestamp());
             $a_ret['title'] = $o_chapter->title;
             $a_ret['paragraphs'] = json_encode($a_pgs);
         }

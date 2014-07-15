@@ -63,8 +63,6 @@ class ChapterPage extends Page
             case 'paragraphs':
                 $this->$property = $this->driver[$property];
                 break;
-            case 'lastModified':
-                break;
             default:
                 return;
         }

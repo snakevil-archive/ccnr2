@@ -75,6 +75,7 @@ class Novel extends ccnr2\Component\Dao
             if (!file_put_contents($p_toc, $s_lob)) {
                 throw new ExTocDataBroken($id);
             }
+            touch($p_toc, $o_toc->lastModified->getTimestamp());
             $a_ret['title'] = $o_toc->title;
             $a_ret['author'] = $o_toc->author;
         }
