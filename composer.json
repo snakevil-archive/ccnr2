@@ -13,7 +13,10 @@
         }
     ],
     "require": {
-        "ext-pdo_sqlite": "*",
+        "ext-dom": "*",
+        "ext-curl": "*",
+        "ext-xmlwriter": "*",
+        "ext-xsl": "*",
         "zen/core": "@dev",
         "zen/web-application": "@dev",
         "zen/model": "@dev",
