@@ -57,7 +57,6 @@
       <a>
         <xsl:attribute name="href">
           <xsl:number />
-          <xsl:text>.xml</xsl:text>
         </xsl:attribute>
         <xsl:attribute name="title">
           <xsl:value-of select="." />

@@ -70,7 +70,6 @@
               <xsl:when test="$cci != 1">
                 <xsl:attribute name="href">
                   <xsl:value-of select="$cci - 1" />
-                  <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="title">
                   <xsl:text>前一章《</xsl:text>
@@ -103,7 +102,6 @@
               <xsl:when test="$cci != count($toc)">
                 <xsl:attribute name="href">
                   <xsl:value-of select="$cci + 1" />
-                  <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
                 <xsl:attribute name="title">
                   <xsl:text>后一章《</xsl:text>

@@ -14,7 +14,7 @@ return array(
     '/n/' => array(
         '(?P<novel>\w+)/' => array(
             '' => $NS . 'Controller\NovelIndex',
-            '(?P<chapter>\d+)\.xml' => $NS . 'Controller\ChapterRead'
+            '(?P<chapter>\d+)' => $NS . 'Controller\ChapterRead'
         )
     )
 );
