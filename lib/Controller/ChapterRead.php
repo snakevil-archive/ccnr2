@@ -10,6 +10,8 @@
 
 namespace snakevil\ccnr2\Controller;
 
+use DateTimeZone;
+
 use snakevil\ccnr2;
 
 /**
@@ -37,6 +39,9 @@ class ChapterRead extends ccnr2\Component\Controller
             )
         );
         $this->cache($o_view, $p_cache, $o_chapter->lastModified);
+        $o_time = clone $o_chapter->lastModified;
+        $o_time->setTimezone(new DateTimeZone('GMT'));
+        $this->output->header('Last-Modified', $o_time->format('D, d M Y H:i:s') . ' GMT');
 
         return $o_view;
     }

@@ -157,7 +157,8 @@ class Chapter extends ccnr2\Component\Dao
                 'title' => $o_node,
                 'ref' => $o_node->xpath('@ref')[0],
                 'novel' => $conditions['novel'][0][1],
-                'paragraphs' => '[]'
+                'paragraphs' => '[]',
+                'lastModified' => 0
             );
         }
 
