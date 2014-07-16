@@ -25,7 +25,7 @@
         rel="stylesheet"
         href="http://libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css"
       />
-      <link rel="stylesheet" href="http://s.szen.in/c/ccnr2.min.css" />
+      <link rel="stylesheet" href="http://s.szen.in/n/ccnr2.min.css" />
     </head>
     <body>
       <xsl:copy-of select="$content" />
