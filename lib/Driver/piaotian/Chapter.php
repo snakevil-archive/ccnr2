@@ -43,7 +43,7 @@ class Chapter extends ccnr2\Utility\PageDriver
         if ('正文' == substr($a_ret['title'], 0, 6)) {
             $a_ret['title'] = trim(substr($a_ret['title'], 6));
         }
-        $s_regex = '|<div class="bottomlink">|';
+        $s_regex = '@<div (?:id="thumb"|class="bottomlink")>@';
         $a_match = $this->estrstr($clob, $s_regex, true);
         if (false === $a_match) {
             throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
@@ -54,7 +54,12 @@ class Chapter extends ccnr2\Utility\PageDriver
         }
         $a_ret['paragraphs'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
-            $a_ret['paragraphs'][] = $a_match[1][$ii];
+            $a_match[1][$ii] = trim($a_match[1][$ii]);
+            if ('' != $a_match[1][$ii] &&
+                false === strpos($a_match[1][$ii], '飘天文学www.piaotian.net感谢各位书友的支持')
+            ) {
+                $a_ret['paragraphs'][] = $a_match[1][$ii];
+            }
         }
 
         return $a_ret;
