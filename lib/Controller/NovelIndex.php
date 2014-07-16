@@ -28,7 +28,7 @@ class NovelIndex extends ccnr2\Component\Controller
      */
     protected function onGet()
     {
-        return new ccnr2\View\TOC(
+        return new ccnr2\View\Toc(
             array(
                 'novel' => ccnr2\Model\Novel::load($this->token['novel'])
             )
