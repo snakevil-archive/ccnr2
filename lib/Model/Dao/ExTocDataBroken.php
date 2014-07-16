@@ -8,7 +8,7 @@
  * @license   CC-BY-NC-ND-3.0
  */
 
-namespace snakevil\ccnr2\Utility;
+namespace snakevil\ccnr2\Model\Dao;
 
 /**
  * 当小说目录页读取失败时抛出地异常。

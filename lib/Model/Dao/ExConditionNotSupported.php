@@ -8,7 +8,7 @@
  * @license   CC-BY-NC-ND-3.0
  */
 
-namespace snakevil\ccnr2\Utility;
+namespace snakevil\ccnr2\Model\Dao;
 
 /**
  * 当集合查找使用运算符不支持时抛出地异常。
