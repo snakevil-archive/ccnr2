@@ -55,6 +55,9 @@ class Chapter extends ccnr2\Utility\PageDriver
         $a_ret['paragraphs'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
             $a_match[1][$ii] = trim($a_match[1][$ii]);
+            if (!$ii && 0 === strpos($a_match[1][$ii], '更新时间：')) {
+                continue;
+            }
             if ('' != $a_match[1][$ii] &&
                 false === strpos($a_match[1][$ii], '飘天文学www.piaotian.net感谢各位书友的支持')
             ) {
