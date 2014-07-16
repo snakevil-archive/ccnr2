@@ -16,10 +16,12 @@
       <xsl:with-param name="author" select="Author" />
       <xsl:with-param name="content">
         <section>
-          <header>
+          <header class="page-header">
             <div class="container">
-              <xsl:apply-templates select="Title" />
-              <xsl:apply-templates select="Author" />
+              <div class="row">
+                <xsl:apply-templates select="Title" />
+                <xsl:apply-templates select="Author" />
+              </div>
             </div>
           </header>
           <xsl:apply-templates select="Chapters" />
@@ -29,13 +31,15 @@
   </xsl:template>
 
   <xsl:template match="/Novel/Title">
-    <h1 class="text-nowrap">
+    <h1 class="col-xs-12 text-nowrap text-right">
+      <xsl:text>《</xsl:text>
       <xsl:value-of select="." />
+      <xsl:text>》</xsl:text>
     </h1>
   </xsl:template>
 
   <xsl:template match="/Novel/Author">
-    <address>
+    <address class="col-xs-12 hidden-xs text-nowrap text-right">
       <xsl:value-of select="." />
     </address>
   </xsl:template>
@@ -49,11 +53,14 @@
   </xsl:template>
 
   <xsl:template match="/Novel/Chapters/Chapter">
-    <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <a class="text-nowrap">
+    <li class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4 text-nowrap">
+      <a>
         <xsl:attribute name="href">
           <xsl:number />
           <xsl:text>.xml</xsl:text>
+        </xsl:attribute>
+        <xsl:attribute name="title">
+          <xsl:value-of select="." />
         </xsl:attribute>
         <xsl:value-of select="." />
       </a>

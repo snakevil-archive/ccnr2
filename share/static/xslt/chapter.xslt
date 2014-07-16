@@ -62,40 +62,63 @@
     <xsl:param name="cci" />
     <xsl:param name="novel" />
     <xsl:variable name="toc" select="$novel/Chapters/Chapter" />
-    <nav class="row">
-      <ul class="list-inline col-xs-12 col-md-8 col-md-offset-2">
-        <li class="hidden-xs col-sm-4 col-sm-push-4 text-center">
-          <a class="btn btn-link" href=".">
-            <xsl:text>《</xsl:text>
-            <xsl:value-of select="$novel/Title" />
-            <xsl:text>》</xsl:text>
-          </a>
-        </li>
-        <li class="col-xs-6 col-sm-4 col-sm-pull-4">
-          <xsl:choose>
-            <xsl:when test="$cci != 1">
-              <a class="btn btn-default">
+    <nav class="navbar navbar-collapse navbar-fixed-bottom">
+      <ul class="list-inline text-center">
+        <li>
+          <a class="btn btn-primary navbar-btn">
+            <xsl:choose>
+              <xsl:when test="$cci != 1">
                 <xsl:attribute name="href">
                   <xsl:value-of select="$cci - 1" />
                   <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
-                <xsl:value-of select="$toc[position() = $cci - 1]" />
-              </a>
-            </xsl:when>
-          </xsl:choose>
+                <xsl:attribute name="title">
+                  <xsl:text>前一章《</xsl:text>
+                  <xsl:value-of select="$toc[position() = $cci - 1]" />
+                  <xsl:text>》</xsl:text>
+                </xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="class">
+                  <xsl:text>btn btn-default navbar-btn disabled</xsl:text>
+                </xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </a>
         </li>
-        <li class="col-xs-6 col-sm-4 text-right">
-          <xsl:choose>
-            <xsl:when test="$cci != count($toc)">
-              <a class="btn btn-primary">
+        <li>
+          <a class="btn btn-primary navbar-btn" href=".">
+            <xsl:attribute name="title">
+              <xsl:text>《</xsl:text>
+              <xsl:value-of select="$novel/Title" />
+              <xsl:text>》章节目录</xsl:text>
+            </xsl:attribute>
+            <span class="glyphicon glyphicon-list-alt"></span>
+          </a>
+        </li>
+        <li>
+          <a class="btn btn-warning navbar-btn">
+            <xsl:choose>
+              <xsl:when test="$cci != count($toc)">
                 <xsl:attribute name="href">
                   <xsl:value-of select="$cci + 1" />
                   <xsl:text>.xml</xsl:text>
                 </xsl:attribute>
-                <xsl:value-of select="$toc[position() = $cci + 1]" />
-              </a>
-            </xsl:when>
-          </xsl:choose>
+                <xsl:attribute name="title">
+                  <xsl:text>后一章《</xsl:text>
+                  <xsl:value-of select="$toc[position() = $cci + 1]" />
+                  <xsl:text>》</xsl:text>
+                </xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="class">
+                  <xsl:text>btn btn-default navbar-btn disabled</xsl:text>
+                </xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
         </li>
       </ul>
     </nav>
