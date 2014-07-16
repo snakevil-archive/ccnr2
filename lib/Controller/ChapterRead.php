@@ -28,10 +28,16 @@ class ChapterRead extends ccnr2\Component\Controller
      */
     protected function onGet()
     {
-        return new ccnr2\View\Chapter(
+        $s_id = $this->token['novel'] . '#' . $this->token['chapter'];
+        $p_cache = $this->token['novel'] . '/' . $this->token['chapter'] . '.html';
+        $o_chapter = ccnr2\Model\Chapter::load($s_id);
+        $o_view = new ccnr2\View\Chapter(
             array(
-                'chapter' => ccnr2\Model\Chapter::load($this->token['novel'] . '#' . $this->token['chapter'])
+                'chapter' => $o_chapter
             )
         );
+        $this->cache($o_view, $p_cache, $o_chapter->lastModified);
+
+        return $o_view;
     }
 }

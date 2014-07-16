@@ -93,4 +93,26 @@ abstract class Controller extends ZenCore\Application\Controller\Controller
 
         return;
     }
+
+    /**
+     * 缓存指定视图。
+     *
+     * @param  ZenView\IView         $view  待缓存地视图
+     * @param  string                $path  缓存文件路径
+     * @param  ZenCore\Type\DateTime $mtime 可选。指定修改时间
+     * @return self
+     */
+    protected function cache(ZenView\IView $view, $path, ZenCore\Type\DateTime $mtime = null)
+    {
+        $p_path = 'var/cache/' . $path;
+        $p_dir = dirname($p_path);
+        if (!is_dir($p_dir) && !mkdir($p_dir, 0755, true) || !file_put_contents($p_path, $view)) {
+            throw new ExCachingDenied($path);
+        }
+        if (null !== $mtime) {
+            touch($p_path, $mtime->getTimestamp());
+        }
+
+        return $this;
+    }
 }

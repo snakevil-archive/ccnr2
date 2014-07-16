@@ -10,6 +10,8 @@
 
 namespace snakevil\ccnr2\Model;
 
+use Zen\Core as ZenCore;
+
 use snakevil\ccnr2;
 
 /**
@@ -19,11 +21,12 @@ use snakevil\ccnr2;
  * @version 2.0.0
  * @since   2.0.0
  *
- * @property-read string   $id         章节编号
- * @property-read string   $ref        来源网站引用编号
- * @property-read string   $title      章节标题
- * @property-read Novel    $novel      隶属小说
- * @property-read string[] $paragraphs 段落集合
+ * @property-read string                $id           章节编号
+ * @property-read string                $ref          来源网站引用编号
+ * @property-read string                $title        章节标题
+ * @property-read Novel                 $novel        隶属小说
+ * @property-read string[]              $paragraphs   段落集合
+ * @property-read ZenCore\Type\DateTime $lastModified 最后修改时间
  */
 class Chapter extends ccnr2\Component\Model
 {
@@ -64,6 +67,15 @@ class Chapter extends ccnr2\Component\Model
     protected $paragraphs;
 
     /**
+     * 最后修改时间。
+     *
+     * @internal
+     *
+     * @var ZenCore\Type\DateTime
+     */
+    protected $lastModified;
+
+    /**
      * {@inheritdoc}
      *
      * @internal
@@ -86,6 +98,13 @@ class Chapter extends ccnr2\Component\Model
             case 'paragraphs':
                 if (!is_array($this->paragraphs)) {
                     $this->paragraphs = json_decode($this->paragraphs);
+                }
+                break;
+            case 'lastModified':
+                if (!$this->lastModified instanceof ZenCore\Type\DateTime) {
+                    $o_time = new ZenCore\Type\DateTime;
+                    $o_time->setTimestamp($this->lastModified);
+                    $this->lastModified = $o_time;
                 }
                 break;
             default:

@@ -3,4 +3,5 @@
 !.gitignore
 
 !cache/
+!db/
 !log/

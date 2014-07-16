@@ -28,10 +28,15 @@ class NovelIndex extends ccnr2\Component\Controller
      */
     protected function onGet()
     {
-        return new ccnr2\View\Toc(
+        $p_cache = $this->token['novel'] . '/index.html';
+        $o_novel = ccnr2\Model\Novel::load($this->token['novel']);
+        $o_view = new ccnr2\View\Toc(
             array(
-                'novel' => ccnr2\Model\Novel::load($this->token['novel'])
+                'novel' => $o_novel
             )
         );
+        $this->cache($o_view, $p_cache, $o_novel->lastModified);
+
+        return $o_view;
     }
 }

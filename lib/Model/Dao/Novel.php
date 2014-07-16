@@ -33,14 +33,15 @@ class Novel extends ccnr2\Component\Dao
      */
     public function read($id)
     {
-        $p_toc = 'var/cache/' . $id . '/toc.xml';
+        $p_toc = 'var/db/' . $id . '/toc.xml';
         $a_ret = array('id' => $id);
         if (is_file($p_toc)) {
+            $a_ret['lastModified'] = filemtime($p_toc);
             $o_sxe = new SimpleXMLElement($p_toc, LIBXML_NOCDATA, true);
             $a_ret['title'] = $o_sxe->xpath('/Novel/Title')[0];
             $a_ret['author'] = $o_sxe->xpath('/Novel/Author')[0];
         } else {
-            $p_src = 'var/cache/' . $id . '/SOURCE';
+            $p_src = 'var/db/' . $id . '/SOURCE';
             if (!is_file($p_src) || !is_readable($p_src)) {
                 throw new ExTocDataBroken($id);
             }
@@ -78,6 +79,7 @@ class Novel extends ccnr2\Component\Dao
             touch($p_toc, $o_toc->lastModified->getTimestamp());
             $a_ret['title'] = $o_toc->title;
             $a_ret['author'] = $o_toc->author;
+            $a_ret['lastModified'] = $o_toc->lastModified->getTimestamp();
         }
 
         return $a_ret;

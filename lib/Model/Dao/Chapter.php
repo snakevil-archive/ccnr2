@@ -32,12 +32,13 @@ class Chapter extends ccnr2\Component\Dao
     public function read($id)
     {
         list($s_novel, $s_chapter) = explode('#', $id);
-        $p_chapter = 'var/cache/' . $s_novel . '/' . $s_chapter . '.xml';
+        $p_chapter = 'var/db/' . $s_novel . '/' . $s_chapter . '.xml';
         $a_ret = array(
             'id' => $id,
             'novel' => $s_novel
         );
         if (is_file($p_chapter)) {
+            $a_ret['lastModified'] = filemtime($p_chapter);
             $o_sxe = new SimpleXMLElement($p_chapter, LIBXML_NOCDATA, true);
             $a_ret['ref'] = $o_sxe->xpath('/Chapter/@ref')[0];
             $a_ret['title'] = $o_sxe->xpath('/Chapter/Title')[0];
@@ -47,11 +48,11 @@ class Chapter extends ccnr2\Component\Dao
             }
             $a_ret['paragraphs'] = json_encode($a_pgs);
         } else {
-            $p_src = 'var/cache/' . $s_novel . '/SOURCE';
+            $p_src = 'var/db/' . $s_novel . '/SOURCE';
             if (!is_file($p_src) || !is_readable($p_src)) {
                 throw new ExTocDataBroken($s_novel);
             }
-            $p_toc = 'var/cache/' . $s_novel . '/toc.xml';
+            $p_toc = 'var/db/' . $s_novel . '/toc.xml';
             if (!is_file($p_toc)) {
                 Novel::singleton()->read($s_novel);
             }
@@ -89,6 +90,7 @@ class Chapter extends ccnr2\Component\Dao
             touch($p_chapter, $o_chapter->lastModified->getTimestamp());
             $a_ret['title'] = $o_chapter->title;
             $a_ret['paragraphs'] = json_encode($a_pgs);
+            $a_ret['lastModified'] = $o_chapter->lastModified->getTimestamp();
         }
 
         return $a_ret;
@@ -113,7 +115,7 @@ class Chapter extends ccnr2\Component\Dao
         if (ccnr2\Model\ChapterSet::OP_EQ != $conditions['novel'][0][0]) {
             throw new ExConditionNotSupported('novel', $conditions['novel'][0][0]);
         }
-        $p_toc = 'var/cache/' . $conditions['novel'][0][1] . '/toc.xml';
+        $p_toc = 'var/db/' . $conditions['novel'][0][1] . '/toc.xml';
         if (!is_file($p_toc)) {
             Novel::singleton()->read($conditions['novel'][0][1]);
         }
@@ -142,7 +144,7 @@ class Chapter extends ccnr2\Component\Dao
         if (ccnr2\Model\ChapterSet::OP_EQ != $conditions['novel'][0][0]) {
             throw new ExConditionNotSupported('novel', $conditions['novel'][0][0]);
         }
-        $p_toc = 'var/cache/' . $conditions['novel'][0][1] . '/toc.xml';
+        $p_toc = 'var/db/' . $conditions['novel'][0][1] . '/toc.xml';
         if (!is_file($p_toc)) {
             Novel::singleton()->read($conditions['novel'][0][1]);
         }

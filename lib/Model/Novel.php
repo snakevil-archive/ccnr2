@@ -10,6 +10,8 @@
 
 namespace snakevil\ccnr2\Model;
 
+use Zen\Core as ZenCore;
+
 use snakevil\ccnr2;
 
 /**
@@ -19,9 +21,10 @@ use snakevil\ccnr2;
  * @version 2.0.0
  * @since   2.0.0
  *
- * @property-read string $id     小说编号
- * @property-read string $title  小说标题
- * @property-read string $author 作者名
+ * @property-read string                $id           小说编号
+ * @property-read string                $title        小说标题
+ * @property-read string                $author       作者名
+ * @property-read ZenCore\Type\DateTime $lastModified 最后修改时间
  */
 class Novel extends ccnr2\Component\Model
 {
@@ -44,6 +47,15 @@ class Novel extends ccnr2\Component\Model
     protected $author;
 
     /**
+     * 最后修改时间。
+     *
+     * @internal
+     *
+     * @var ZenCore\Type\DateTime
+     */
+    protected $lastModified;
+
+    /**
      * {@inheritdoc}
      *
      * @internal
@@ -57,6 +69,13 @@ class Novel extends ccnr2\Component\Model
             case 'id':
             case 'title':
             case 'author':
+                break;
+            case 'lastModified':
+                if (!$this->lastModified instanceof ZenCore\Type\DateTime) {
+                    $o_time = new ZenCore\Type\DateTime;
+                    $o_time->setTimestamp($this->lastModified);
+                    $this->lastModified = $o_time;
+                }
                 break;
             default:
                 return;
