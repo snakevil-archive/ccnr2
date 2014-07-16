@@ -13,11 +13,11 @@
   <xsl:include href="page.xslt" />
 
   <xsl:variable name="novel" select="document($toc)/Novel" />
-  <xsl:variable name="title" select="/Chapter/Title" />
+  <xsl:variable name="ref" select="/Chapter/@ref" />
   <xsl:variable name="cci">
     <xsl:for-each select="$novel/Chapters/Chapter">
       <xsl:choose>
-        <xsl:when test="$title = text()">
+        <xsl:when test="$ref = @ref">
           <xsl:value-of select="position()" />
         </xsl:when>
       </xsl:choose>
