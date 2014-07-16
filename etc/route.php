@@ -11,7 +11,7 @@
 $NS = 'snakevil\ccnr2\\';
 
 return array(
-    '/c/' => array(
+    '/n/' => array(
         '(?P<novel>\w+)/' => array(
             '' => $NS . 'Controller\NovelIndex',
             '(?P<chapter>\d+)\.xml' => $NS . 'Controller\ChapterRead'
