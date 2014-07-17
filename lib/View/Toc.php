@@ -35,7 +35,7 @@ class Toc extends ZenView\View
         $o_xml = new DOMDocument;
         $o_xml->load('var/db/' . $params['novel'] . '/toc.xml');
         $o_xsl = new DOMDocument;
-        $o_xsl->load('share/static/xslt/toc.xslt');
+        $o_xsl->load('share/xslt/toc.xslt');
         $o_xslt = new XSLTProcessor;
         $o_xslt->importStyleSheet($o_xsl);
 
