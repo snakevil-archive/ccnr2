@@ -14,9 +14,10 @@ cd `'dirname' "$0"`/../../var;
   | while read fi; do \
       di=`'dirname' "$fi"`; \
       ID=`'basename' "$di"`; \
-      cd "cache/$ID"; \
-      fo=`'ls' *.html | 'sort' -rn | 'head' -n1`; \
-      cd ../..; \
-      'rm' -f "$di/toc.xml" "cache/$ID/index.html" "cache/$ID/$fo"; \
+      [ ! -d "cache/$ID" ] || { \
+        fo=`cd "cache/$ID"; 'ls' *.html | 'sort' -rn | 'head' -n1`; \
+        'rm' -f "cache/$ID/index.html" "cache/$ID/$fo"; \
+      }; \
+      'rm' -f "$di/toc.xml"; \
       echo `'date' '+%FT%T%:z'`" $ID" >> "$LOG"; \
     done

@@ -7,4 +7,4 @@
 # @license   CC-BY-NC-ND-3.0
 ##
 
-*/15 * * * * www-data /bin/sh /var/www/szen.in/ccnr2.git/share/cron/update-toc.sh
+2 * * * * www-data /bin/sh /var/www/szen.in/ccnr2.git/share/cron/update-toc.sh
