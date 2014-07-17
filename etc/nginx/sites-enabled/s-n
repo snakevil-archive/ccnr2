@@ -1,0 +1,15 @@
+# -*- nginx -*-
+
+location ~ ^/n/.+\.(css|js)$ {
+    charset     utf-8;
+    add_header  Vary Accept-Encoding;
+    add_header  X-Powered-By CCNRv2;
+
+    expires     1w;
+}
+
+location ~ ^/n/.+\.(jpe?g|png)$ {
+    add_header  X-Powered-By CCNRv2;
+
+    expires     max;
+}

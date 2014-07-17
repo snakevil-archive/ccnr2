@@ -25,6 +25,12 @@ location ~ ^(/n)(/\w+/\d+)$ {
 location /n/.cache/ {
     internal;
 
+    charset     utf-8;
+
+    expires     1d;
+    add_header  X-Cache HIT;
+    add_header  X-Powered-By CCNRv2;
+
     try_files   $uri @php-ccnr2;
 }
 
