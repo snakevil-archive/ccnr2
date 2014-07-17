@@ -6,6 +6,8 @@
 # @license   GPL-3.0+
 # @license   CC-BY-NC-ND-3.0
 
+LOG=log/`'basename' "$0" .sh`.log
+
 cd `'dirname' "$0"`/../../var;
 
 'find' db -mindepth 2 -maxdepth 2 -type f -name 'SOURCE' \
@@ -16,4 +18,5 @@ cd `'dirname' "$0"`/../../var;
       fo=`'ls' *.html | 'sort' -rn | 'head' -n1`; \
       cd ../..; \
       'rm' -f "$di/toc.xml" "cache/$ID/index.html" "cache/$ID/$fo"; \
+      echo `'date' '+%FT%T%:z'`" $ID" >> "$LOG"; \
     done
