@@ -54,7 +54,7 @@ abstract class Controller extends ZenCore\Application\Controller\Controller
             $this->output->header('Vary', 'Accept-Encoding');
         }
         $this->output
-            ->header('X-Cache', 'HIT')
+            ->header('X-Cache', 'MISS')
             ->header('X-Powered-By', 'CCNRv2')
             ->close();
     }

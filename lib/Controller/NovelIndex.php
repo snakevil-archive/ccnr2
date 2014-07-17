@@ -10,6 +10,7 @@
 
 namespace snakevil\ccnr2\Controller;
 
+use DateTime;
 use DateTimeZone;
 
 use snakevil\ccnr2;

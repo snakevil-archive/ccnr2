@@ -32,33 +32,23 @@ class Toc extends ZenView\View
      */
     protected function onRender($params)
     {
-        $s_xml = <<<XML
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Novel>
-  <Title><![CDATA[{$params['novel']['title']}]]></Title>
-  <Author><![CDATA[{$params['novel']['author']}]]></Author>
-  <Chapters>
-
-XML;
-        foreach ($params['novel']->getChapters() as $o_chapter) {
-            $s_xml .= <<<XML
-    <Chapter ref="{$o_chapter['ref']}"><![CDATA[{$o_chapter['title']}]]></Chapter>
-
-XML;
-        }
-        $s_xml .= <<<XML
-  </Chapters>
-</Novel>
-
-XML;
-
         $o_xml = new DOMDocument;
-        $o_xml->loadXml($s_xml);
+        $o_xml->load('var/db/' . $params['novel'] . '/toc.xml');
         $o_xsl = new DOMDocument;
         $o_xsl->load('share/static/xslt/toc.xslt');
         $o_xslt = new XSLTProcessor;
         $o_xslt->importStyleSheet($o_xsl);
 
-        return $o_xslt->transformToXML($o_xml);
+        return str_replace(
+            array(
+                '<link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">',
+                '<script src="//s.szen.in/n/ccnr2.min.js"></script>'
+            ),
+            array(
+                '<style>' . file_get_contents('share/static/ccnr2.min.css') . '</style>',
+                '<script>' . file_get_contents('share/static/ccnr2.min.js') . '</script>'
+            ),
+            $o_xslt->transformToXML($o_xml)
+        );
     }
 }

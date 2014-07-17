@@ -32,33 +32,24 @@ class Chapter extends ZenView\View
      */
     protected function onRender($params)
     {
-        $s_xml = <<<XML
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Chapter ref="{$params['chapter']['ref']}">
-  <Title><![CDATA[{$params['chapter']['title']}]]></Title>
-  <Paragraphs>
-
-XML;
-        foreach ($params['chapter']->paragraphs as $s_paragraph) {
-            $s_xml .= <<<XML
-    <Paragraph><![CDATA[{$s_paragraph}]]></Paragraph>
-
-XML;
-        }
-        $s_xml .= <<<XML
-  </Paragraphs>
-</Chapter>
-
-XML;
-
         $o_xml = new DOMDocument;
-        $o_xml->loadXml($s_xml);
+        $o_xml->load('var/db/' . str_replace('#', '/', $params['chapter']) . '.xml');
         $o_xsl = new DOMDocument;
         $o_xsl->load('share/static/xslt/chapter.xslt');
         $o_xslt = new XSLTProcessor;
         $o_xslt->setParameter('', 'toc', realpath('var/db/' . $params['chapter']->novel . '/toc.xml'));
         $o_xslt->importStyleSheet($o_xsl);
 
-        return $o_xslt->transformToXML($o_xml);
+        return str_replace(
+            array(
+                '<link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">',
+                '<script src="//s.szen.in/n/ccnr2.min.js"></script>'
+            ),
+            array(
+                '<style>' . file_get_contents('share/static/ccnr2.min.css') . '</style>',
+                '<script>' . file_get_contents('share/static/ccnr2.min.js') . '</script>'
+            ),
+            $o_xslt->transformToXML($o_xml)
+        );
     }
 }
