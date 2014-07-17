@@ -1,25 +1,35 @@
 # -*- nginx -*-
 
-set             $cache /.cache;
+set                 $cache /.cache;
+set                 $db_root /var/www/szen.in/ccnr2.git/var/db;
 
 location ~ ^(/n)(/\w+)$ {
-    set         $prefix $1;
-    set         $suffix $2;
-    if (-d /var/www/szen.in/ccnr2.git/var/db$suffix) {
-        rewrite . $prefix$suffix/ permanent;
+    set             $prefix $1;
+    set             $novel $2;
+    if (-d $db_root$novel) {
+        rewrite     . $prefix$novel/ permanent;
     }
 }
 
 location ~ ^(/n)(/\w+/)$ {
-    set         $prefix $1;
-    set         $suffix $2;
-    rewrite     . "${prefix}${cache}${suffix}index.html";
+    set             $prefix $1;
+    set             $novel $2;
+    rewrite         . "${prefix}${cache}${novel}index.html";
 }
 
 location ~ ^(/n)(/\w+/\d+)$ {
-    set         $prefix $1;
-    set         $suffix $2;
-    rewrite     . "${prefix}${cache}${suffix}.html";
+    set             $prefix $1;
+    set             $novel $2;
+    rewrite         . "${prefix}${cache}${novel}.html";
+}
+
+location ~ ^(/n)(/\w+)(/\d+)\.html$ {
+    set             $prefix $1;
+    set             $novel $2;
+    set             $chapter $3;
+    if (-d $db_root$novel) {
+        rewrite     . $prefix$novel$chapter permanent;
+    }
 }
 
 location /n/.cache/ {

@@ -2,5 +2,6 @@
 
 !.gitignore
 
+!cron/
 !public/
 !static/

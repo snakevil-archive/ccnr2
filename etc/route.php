@@ -11,10 +11,12 @@
 $NS = 'snakevil\ccnr2\\';
 
 return array(
-    '/n/\.cache/' => array(
-        '(?P<novel>\w+)/' => array(
-            'index\.html' => $NS . 'Controller\NovelIndex',
-            '(?P<chapter>\d+)\.html' => $NS . 'Controller\ChapterRead'
+    '/n/' => array(
+        '\.cache/' => array(
+            '(?P<novel>\w+)/' => array(
+                'index\.html' => $NS . 'Controller\NovelIndex',
+                '(?P<chapter>\d+)\.html' => $NS . 'Controller\ChapterRead'
+            )
         )
     )
 );
