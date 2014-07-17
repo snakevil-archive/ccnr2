@@ -32,9 +32,9 @@
 
   <xsl:template match="/Novel/Title">
     <h1 class="col-xs-12 text-nowrap text-right">
-      <xsl:text>《</xsl:text>
+      <xsl:text><![CDATA[《]]></xsl:text>
       <xsl:value-of select="." />
-      <xsl:text>》</xsl:text>
+      <xsl:text><![CDATA[》]]></xsl:text>
     </h1>
   </xsl:template>
 

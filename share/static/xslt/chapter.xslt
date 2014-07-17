@@ -72,9 +72,9 @@
                   <xsl:value-of select="$cci - 1" />
                 </xsl:attribute>
                 <xsl:attribute name="title">
-                  <xsl:text>前一章《</xsl:text>
+                  <xsl:text><![CDATA[前一章《]]></xsl:text>
                   <xsl:value-of select="$toc[position() = $cci - 1]" />
-                  <xsl:text>》</xsl:text>
+                  <xsl:text><![CDATA[》]]></xsl:text>
                 </xsl:attribute>
               </xsl:when>
               <xsl:otherwise>
@@ -89,9 +89,9 @@
         <li>
           <a class="btn btn-primary navbar-btn" href=".">
             <xsl:attribute name="title">
-              <xsl:text>《</xsl:text>
+              <xsl:text><![CDATA[《]]></xsl:text>
               <xsl:value-of select="$novel/Title" />
-              <xsl:text>》章节目录</xsl:text>
+              <xsl:text><![CDATA[》章节目录]]></xsl:text>
             </xsl:attribute>
             <span class="glyphicon glyphicon-list-alt"></span>
           </a>
@@ -104,9 +104,9 @@
                   <xsl:value-of select="$cci + 1" />
                 </xsl:attribute>
                 <xsl:attribute name="title">
-                  <xsl:text>后一章《</xsl:text>
+                  <xsl:text><![CDATA[后一章《]]></xsl:text>
                   <xsl:value-of select="$toc[position() = $cci + 1]" />
-                  <xsl:text>》</xsl:text>
+                  <xsl:text><![CDATA[》]]></xsl:text>
                 </xsl:attribute>
               </xsl:when>
               <xsl:otherwise>

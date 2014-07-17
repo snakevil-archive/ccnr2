@@ -8,10 +8,7 @@
     <html lang="zh-CN">
     <head>
       <meta charset="utf-8" />
-      <meta
-        name="viewport"
-        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
-      />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
       <title>
         <xsl:value-of select="$title" />
         <xsl:text><![CDATA[ | CCNR v2]]></xsl:text>
@@ -21,16 +18,20 @@
           <xsl:value-of select="$author" />
         </xsl:attribute>
       </meta>
+      <meta
+        name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+      />
+      <link rel="icon" href="//s.szen.in/n/icon.png" />
       <link
         rel="stylesheet"
         href="//libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css"
       />
       <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
-      <link rel="icon" href="//s.szen.in/n/icon.png" />
-      <script src="//libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
       <xsl:copy-of select="$content" />
+      <script src="//libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>
     </html>
