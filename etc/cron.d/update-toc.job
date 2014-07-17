@@ -1,0 +1,10 @@
+##
+# 更新连载小说的 TOC 数据文件。
+#
+# @author    Snakevil Zen <zsnakevil@gmail.com>
+# @copyright © 2014 SZen.in
+# @license   GPL-3.0+
+# @license   CC-BY-NC-ND-3.0
+##
+
+*/15 * * * * www-data /bin/sh /var/www/szen.in/ccnr2.git/share/cron/update-toc.sh
