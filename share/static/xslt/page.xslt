@@ -27,10 +27,11 @@
       />
       <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
+      <script src="//libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
       <xsl:copy-of select="$content" />
-      <script src="//libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+      <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>
     </html>
   </xsl:template>
