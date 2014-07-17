@@ -124,7 +124,7 @@ abstract class Page extends ZenCore\Component
                 CURLOPT_FILETIME => true,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_CONNECTTIMEOUT => 3,
-                CURLOPT_TIMEOUT => 6,
+                CURLOPT_TIMEOUT => 15,
                 CURLOPT_ENCODING => '',
                 CURLOPT_USERAGENT => 'Sosospider+(+http://help.soso.com/webspider.htm)'
             )
