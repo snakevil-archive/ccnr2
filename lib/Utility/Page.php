@@ -61,6 +61,7 @@ abstract class Page extends ZenCore\Component
      * @return self
      *
      * @throws ExPageDriverMissing 当内容分析驱动组件找不到时
+     * @throws ExCurlFailure       当多次尝试抓取远端页面均失败时
      */
     final public static function parse($uri)
     {
@@ -75,7 +76,18 @@ abstract class Page extends ZenCore\Component
         if (!class_exists($c_driver)) {
             throw new ExPageDriverMissing($a_parts['host']);
         }
-        list($o_time, $s_lob) = self::curl($uri);
+        $i_retries = 0;
+        while (true) {
+            ++$i_retries;
+            try {
+                list($o_time, $s_lob) = self::curl($uri);
+                break;
+            } catch (ExCurlFailure $ee) {
+                if (2 < $i_retries) {
+                    throw $ee;
+                }
+            }
+        }
         $o_this = new static(new $c_driver($s_lob, $uri));
         $o_this->lastModified = $o_time;
 
