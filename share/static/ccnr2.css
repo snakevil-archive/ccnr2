@@ -30,6 +30,11 @@ footer .list-inline {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.btn .badge {
+  position: absolute;
+  background-color: #d9534f;
+  color: #fff;
+}
 @media (max-width: 768px) {
   body {
     overflow-y: scroll;

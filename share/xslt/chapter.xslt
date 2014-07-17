@@ -118,6 +118,7 @@
               </xsl:otherwise>
             </xsl:choose>
             <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="badge hidden">0</span>
           </a>
         </li>
       </ul>

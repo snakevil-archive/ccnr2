@@ -8,14 +8,19 @@
  * @license   CC-BY-NC-ND-3.0
  */
 
-$NS = 'snakevil\ccnr2\\';
+$NS = 'snakevil\ccnr2\Controller\\';
 
 return array(
     '/n/' => array(
         '\.cache/' => array(
             '(?P<novel>\w+)/' => array(
-                'index\.html' => $NS . 'Controller\NovelIndex',
-                '(?P<chapter>\d+)\.html' => $NS . 'Controller\ChapterRead'
+                'index\.html' => $NS . 'NovelIndex',
+                '(?P<chapter>\d+)\.html' => $NS . 'ChapterRead'
+            )
+        ),
+        '(?P<novel>\w+)/' => array(
+            '(?P<chapter>\d+)' => array(
+                '/cd' => $NS . 'ChapterOffset'
             )
         )
     )

@@ -10,6 +10,7 @@
 
 return array(
     'caching' => array(
-        'html' => 86400
+        'page' => 86400,
+        'api' => 3600
     )
 );
