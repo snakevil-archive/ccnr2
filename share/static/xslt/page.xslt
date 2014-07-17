@@ -25,13 +25,13 @@
       <link rel="icon" href="//s.szen.in/n/icon.png" />
       <link
         rel="stylesheet"
-        href="//libs.useso.com/js/bootstrap/3.2.0/css/bootstrap.min.css"
+        href="//cdn.staticfile.org/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
       />
       <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
     </head>
     <body>
       <xsl:copy-of select="$content" />
-      <script src="//libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+      <script src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>
     </html>
