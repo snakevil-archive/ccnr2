@@ -1,15 +1,18 @@
 # -*- nginx -*-
 
 location ~ ^/n/.+\.(css|js)$ {
-    charset     utf-8;
-    add_header  Vary Accept-Encoding;
-    add_header  X-Powered-By CCNRv2;
+    gzip                on;
+    gzip_comp_level     5;
+    gzip_min_length     256;
+    gzip_proxied        any;
+    gzip_types          *;
+    gzip_vary           on;
 
-    expires     1w;
+    expires             1w;
+    add_header          X-Powered-By CCNRv2;
 }
 
 location ~ ^/n/.+\.(jpe?g|png)$ {
-    add_header  X-Powered-By CCNRv2;
-
     expires     max;
+    add_header  X-Powered-By CCNRv2;
 }

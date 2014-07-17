@@ -8,4 +8,8 @@
  * @license   CC-BY-NC-ND-3.0
  */
 
-return array();
+return array(
+    'caching' => array(
+        'html' => 86400
+    )
+);

@@ -35,13 +35,20 @@ location ~ ^(/n)(/\w+)(/\d+)\.html$ {
 location /n/.cache/ {
     internal;
 
-    charset     utf-8;
+    charset             utf-8;
 
-    expires     1d;
-    add_header  X-Cache HIT;
-    add_header  X-Powered-By CCNRv2;
+    gzip                on;
+    gzip_comp_level     5;
+    gzip_min_length     256;
+    gzip_proxied        any;
+    gzip_types          text/html;
+    gzip_vary           on;
 
-    try_files   $uri @php-ccnr2;
+    expires             1d;
+    add_header          X-Cache HIT;
+    add_header          X-Powered-By CCNRv2;
+
+    try_files           $uri @php-ccnr2;
 }
 
 location @php-ccnr2 {

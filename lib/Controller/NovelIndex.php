@@ -38,9 +38,14 @@ class NovelIndex extends ccnr2\Component\Controller
             )
         );
         $this->cache($o_view, $p_cache, $o_novel->lastModified);
-        $o_time = clone $o_novel->lastModified;
-        $o_time->setTimezone(new DateTimeZone('GMT'));
-        $this->output->header('Last-Modified', $o_time->format('D, d M Y H:i:s') . ' GMT');
+        $o_tlm = clone $o_novel->lastModified;
+        $o_tlm->setTimezone(new DateTimeZone('GMT'));
+        $o_tnow = new DateTime('+' . $this->config['caching.html'] . ' secs');
+        $this->output
+            ->header('Content-Type', 'text/html; charset=utf-8')
+            ->header('Last-Modified', $o_tlm->format('D, d M Y H:i:s') . ' GMT')
+            ->header('Expires', $o_tnow->format('D, d M Y H:i:s') . ' GMT')
+            ->header('Cache-Control', 'max-age=' . $this->config['caching.html']);
 
         return $o_view;
     }

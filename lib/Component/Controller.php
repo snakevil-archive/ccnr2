@@ -50,7 +50,13 @@ abstract class Controller extends ZenCore\Application\Controller\Controller
             $s_out = $o_view->render();
             $this->output->write($s_out);
         }
-        $this->output->close();
+        if (isset($this->input['server:HTTP_ACCEPT_ENCODING'])) {
+            $this->output->header('Vary', 'Accept-Encoding');
+        }
+        $this->output
+            ->header('X-Cache', 'HIT')
+            ->header('X-Powered-By', 'CCNRv2')
+            ->close();
     }
 
     /**
