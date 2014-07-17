@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template name="page">
+    <xsl:param name="dev" />
     <xsl:param name="title" />
     <xsl:param name="author" />
     <xsl:param name="content" />
@@ -27,12 +28,28 @@
         rel="stylesheet"
         href="//cdn.staticfile.org/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
       />
-      <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
+      <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">
+        <xsl:choose>
+          <xsl:when test="$dev = 1">
+            <xsl:attribute name="href">
+              <xsl:text><![CDATA[//s.szen.in/n/ccnr2.css]]></xsl:text>
+            </xsl:attribute>
+          </xsl:when>
+        </xsl:choose>
+      </link>
     </head>
     <body>
       <xsl:copy-of select="$content" />
       <script src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-      <script src="//s.szen.in/n/ccnr2.min.js"></script>
+      <script src="//s.szen.in/n/ccnr2.min.js">
+        <xsl:choose>
+          <xsl:when test="$dev = 1">
+            <xsl:attribute name="src">
+              <xsl:text><![CDATA[//s.szen.in/n/ccnr2.js]]></xsl:text>
+            </xsl:attribute>
+          </xsl:when>
+        </xsl:choose>
+      </script>
     </body>
     </html>
   </xsl:template>

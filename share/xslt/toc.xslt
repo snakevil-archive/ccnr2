@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:param name="dev" />
+
   <xsl:output
     method="html"
     encoding="utf-8"
@@ -12,6 +14,7 @@
 
   <xsl:template match="/Novel">
     <xsl:call-template name="page">
+      <xsl:with-param name="dev" select="$dev" />
       <xsl:with-param name="title" select="Title" />
       <xsl:with-param name="author" select="Author" />
       <xsl:with-param name="content">

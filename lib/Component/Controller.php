@@ -110,15 +110,27 @@ abstract class Controller extends ZenCore\Application\Controller\Controller
      */
     protected function cache(ZenView\IView $view, $path, ZenCore\Type\DateTime $mtime = null)
     {
-        $p_path = 'var/cache/' . $path;
-        $p_dir = dirname($p_path);
-        if (!is_dir($p_dir) && !mkdir($p_dir, 0755, true) || !file_put_contents($p_path, $view)) {
-            throw new ExCachingDenied($path);
-        }
-        if (null !== $mtime) {
-            touch($p_path, $mtime->getTimestamp());
+        if (!$this->inDev()) {
+            $p_path = 'var/cache/' . $path;
+            $p_dir = dirname($p_path);
+            if (!is_dir($p_dir) && !mkdir($p_dir, 0755, true) || !file_put_contents($p_path, $view)) {
+                throw new ExCachingDenied($path);
+            }
+            if (null !== $mtime) {
+                touch($p_path, $mtime->getTimestamp());
+            }
         }
 
         return $this;
+    }
+
+    /**
+     * 判断是否为开发模式。
+     *
+     * @return bool
+     */
+    protected function inDev()
+    {
+        return file_exists('@DEV');
     }
 }

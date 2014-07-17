@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:param name="dev" />
   <xsl:param name="toc" />
 
   <xsl:output
@@ -26,6 +27,7 @@
 
   <xsl:template match="/Chapter">
     <xsl:call-template name="page">
+      <xsl:with-param name="dev" select="$dev" />
       <xsl:with-param name="title">
         <xsl:value-of select="$novel/Title" />
         <xsl:text> </xsl:text>

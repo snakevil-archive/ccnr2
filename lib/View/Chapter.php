@@ -37,7 +37,13 @@ class Chapter extends ZenView\View
         $o_xsl = new DOMDocument;
         $o_xsl->load('share/xslt/chapter.xslt');
         $o_xslt = new XSLTProcessor;
-        $o_xslt->setParameter('', 'toc', realpath('var/db/' . $params['chapter']->novel . '/toc.xml'));
+        $o_xslt->setParameter(
+            '',
+            array(
+                'toc' => realpath('var/db/' . $params['chapter']->novel . '/toc.xml'),
+                'dev' => isset($params['@dev']) && $params['@dev']
+            )
+        );
         $o_xslt->importStyleSheet($o_xsl);
 
         return str_replace(

@@ -36,6 +36,7 @@ class ChapterRead extends ccnr2\Component\Controller
         $o_chapter = ccnr2\Model\Chapter::load($s_id);
         $o_view = new ccnr2\View\Chapter(
             array(
+                '@dev' => $this->inDev(),
                 'chapter' => $o_chapter
             )
         );

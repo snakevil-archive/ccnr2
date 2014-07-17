@@ -35,6 +35,7 @@ class NovelIndex extends ccnr2\Component\Controller
         $o_novel = ccnr2\Model\Novel::load($this->token['novel']);
         $o_view = new ccnr2\View\Toc(
             array(
+                '@dev' => $this->inDev(),
                 'novel' => $o_novel
             )
         );
