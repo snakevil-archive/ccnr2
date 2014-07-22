@@ -15,8 +15,8 @@ cd `'dirname' "$0"`/../../var;
       di=`'dirname' "$fi"`; \
       ID=`'basename' "$di"`; \
       [ ! -d "cache/$ID" ] || { \
-        fo=`cd "cache/$ID"; 'ls' *.html | 'sort' -rn | 'head' -n1`; \
-        'rm' -f "cache/$ID/index.html" "cache/$ID/$fo"; \
+        fo=`cd "cache/$ID"; 'basename' $('ls' *.xml | 'sort' -rn | 'head' -n1) .xml`; \
+        'rm' -f "cache/$ID/index.html" "cache/$ID/$fo.html"; \
       }; \
       'rm' -f "$di/toc.xml"; \
       echo `'date' '+%FT%T%:z'`" $ID" >> "$LOG"; \
