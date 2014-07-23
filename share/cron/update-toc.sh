@@ -14,10 +14,26 @@ cd `'dirname' "$0"`/../../var;
   | while read fi; do \
       di=`'dirname' "$fi"`; \
       ID=`'basename' "$di"`; \
-      [ ! -d "cache/$ID" ] || { \
-        fo=`cd "cache/$ID"; 'basename' $('ls' *.xml | 'sort' -rn | 'head' -n1) .xml`; \
-        'rm' -f "cache/$ID/index.html" "cache/$ID/$fo.html"; \
+      fs=''; \
+      fd="db/$ID/toc.xml"; \
+      [ ! -f "$fd" ] || { \
+        fs="$fs "`'basename' "$fd"`; \
+        'rm' -f "$fd"; \
       }; \
-      'rm' -f "$di/toc.xml"; \
-      echo `'date' '+%FT%T%:z'`" $ID" >> "$LOG"; \
+      [ ! -d "cache/$ID" ] || { \
+        fd="cache/$ID/index.html"; \
+        [ ! -f "$fd" ] || { \
+          fs="$fs "`'basename' "$fd"`; \
+          'rm' -f "$fd"; \
+        }; \
+        fo=`cd "db/$ID"; 'basename' $('ls' *.xml 2>/dev/null | 'sort' -rn | 'head' -n1) .xml`; \
+        fd="cache/$ID/$fo.html"; \
+        [ ! -f "$fd" ] || { \
+          fs="$fs "`'basename' "$fd"`; \
+          'rm' -f "$fd"; \
+        }; \
+      }; \
+      [ -n "$fs" ] || fs=' SKIPPED'; \
+      fs=":$fs"; \
+      echo `'date' '+%FT%T%:z'`" $ID$fs" >> "$LOG"; \
     done
