@@ -107,6 +107,8 @@ abstract class Controller extends ZenCore\Application\Controller\Controller
      * @param  string                $path  缓存文件路径
      * @param  ZenCore\Type\DateTime $mtime 可选。指定修改时间
      * @return self
+     *
+     * @throws ExCachingDenied 当缓存写入失败时
      */
     protected function cache(ZenView\IView $view, $path, ZenCore\Type\DateTime $mtime = null)
     {

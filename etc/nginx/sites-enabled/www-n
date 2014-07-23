@@ -3,6 +3,10 @@
 set     $cache /.cache;
 set     $db_root /var/www/szen.in/ccnr2.git/var/db;
 
+location = /n/ {
+    try_files   $uri @php-ccnr2;
+}
+
 location ~ ^(/n)(/\w+)$ {
     set             $prefix $1;
     set             $novel $2;

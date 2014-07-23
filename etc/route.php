@@ -12,6 +12,7 @@ $NS = 'snakevil\ccnr2\Controller\\';
 
 return array(
     '/n/' => array(
+        '' => $NS . 'Index',
         '\.cache/' => array(
             '(?P<novel>\w+)/' => array(
                 'index\.html' => $NS . 'NovelIndex',
