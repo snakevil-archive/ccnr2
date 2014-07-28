@@ -11,8 +11,7 @@
 namespace snakevil\ccnr2\Model;
 
 use Zen\Core as ZenCore;
-
-use snakevil\ccnr2;
+use snakevil\zen;
 
 /**
  * 小说模型。
@@ -26,7 +25,7 @@ use snakevil\ccnr2;
  * @property-read string                $author       作者名
  * @property-read ZenCore\Type\DateTime $lastModified 最后修改时间
  */
-class Novel extends ccnr2\Component\Model
+class Novel extends zen\Model
 {
     /**
      * 小说标题。

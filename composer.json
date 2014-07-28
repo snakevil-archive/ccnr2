@@ -23,7 +23,8 @@
         "zen/core": "@dev",
         "zen/web-application": "@dev",
         "zen/model": "@dev",
-        "zen/view": "@dev"
+        "zen/view": "@dev",
+        "snakevil/zen": "@dev"
     },
     "autoload": {
         "psr-4": {

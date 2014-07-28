@@ -12,9 +12,7 @@ namespace snakevil\ccnr2\Controller;
 
 use DateTime;
 use DateTimeZone;
-
-use Zen\Web\Application as ZenApp;
-
+use snakevil\zen;
 use snakevil\ccnr2;
 
 /**
@@ -39,7 +37,7 @@ class ChapterOffset extends ccnr2\Component\Controller
         if ($b_mod) {
             $i_num = count($o_novel->getChapters()) - $this->token['chapter'];
         } else {
-            $this->output->state(ZenApp\IResponse::STATUS_NOT_MODIFIED);
+            $this->output->state(304);
         }
         $o_tlm = clone $o_novel->lastModified;
         $o_tlm->setTimezone(new DateTimeZone('GMT'));
@@ -50,7 +48,7 @@ class ChapterOffset extends ccnr2\Component\Controller
             ->header('Expires', $o_tnow->format('D, d M Y H:i:s') . ' GMT')
             ->header('Cache-Control', 'max-age=' . $this->config['caching.api']);
         if ($b_mod) {
-            return new ccnr2\View\Api(
+            return new zen\View\Json(
                 array(
                     'quantity' => $i_num
                 )
@@ -71,7 +69,7 @@ class ChapterOffset extends ccnr2\Component\Controller
             ->header('Expires', 'Thu, 01 Jan 1970 00:00:01 GMT')
             ->header('Cache-Control', 'max-age=0');
 
-        return new ccnr2\View\Api(
+        return new zen\View\Json(
             array(
                 'quantity' => 0
             )

@@ -11,8 +11,7 @@
 namespace snakevil\ccnr2\Model;
 
 use Zen\Core as ZenCore;
-
-use snakevil\ccnr2;
+use snakevil\zen;
 
 /**
  * 章节模型。
@@ -28,7 +27,7 @@ use snakevil\ccnr2;
  * @property-read string[]              $paragraphs   段落集合
  * @property-read ZenCore\Type\DateTime $lastModified 最后修改时间
  */
-class Chapter extends ccnr2\Component\Model
+class Chapter extends zen\Model
 {
     /**
      * 来源网站引用编号。

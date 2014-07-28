@@ -10,6 +10,7 @@
 
 return array(
     'caching' => array(
+        'solid' => 'var/cache',
         'page' => 86400,
         'api' => 3600
     )
