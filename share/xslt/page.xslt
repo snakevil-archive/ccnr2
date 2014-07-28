@@ -2,11 +2,16 @@
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template name="page">
     <xsl:param name="dev" />
+    <xsl:param name="type" />
     <xsl:param name="title" />
     <xsl:param name="author" />
     <xsl:param name="content" />
     <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
     <html lang="zh-CN">
+      <xsl:attribute name="class">
+        <xsl:text>page-</xsl:text>
+        <xsl:value-of select="$type" />
+      </xsl:attribute>
     <head>
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />

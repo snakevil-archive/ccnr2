@@ -20,9 +20,10 @@ footer .list-inline {
   margin-bottom: 0;
   margin-left: 0;
 }
-.page-header {
+.page-toc .css-cover {
   padding-top: 40px;
   margin-top: 0;
+  margin-bottom: 10px;
   color: #dfd;
   background-color: #2a6496;
 }
@@ -43,12 +44,13 @@ footer .list-inline {
 @media (max-width: 767px) {
   h1 {
     font-size: 1.5em;
+    margin-top: 10px;
   }
   h2 {
     font-size: 1.2em;
     margin-top: 15px;
   }
-  .page-header {
+  .page-toc .css-cover {
     padding-top: 0;
   }
 }
@@ -58,5 +60,8 @@ footer .list-inline {
   }
   .container {
     width: 750px;
+  }
+  .list-inline li {
+    margin-bottom: 5px;
   }
 }

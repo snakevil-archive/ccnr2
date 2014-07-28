@@ -28,6 +28,9 @@
   <xsl:template match="/Chapter">
     <xsl:call-template name="page">
       <xsl:with-param name="dev" select="$dev" />
+      <xsl:with-param name="type">
+        <xsl:text>chapter</xsl:text>
+      </xsl:with-param>
       <xsl:with-param name="title">
         <xsl:value-of select="$novel/Title" />
         <xsl:text> </xsl:text>

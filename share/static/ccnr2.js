@@ -1,27 +1,52 @@
-jQuery(document).ready(function ($, doc, anav) {
-  doc = document;
-  anav = 'article footer nav ';
-
-  // Hacks As' click() event
-  $('a').click(function (ev) {
-    if (!ev.toElement) return this.click();
+/* -*- tab-width: 2 -*- */
+(function ($, master) {
+  'use strict';
+  master = {};
+  $.each($('html').attr('class').split(/\s+/), function (index, value) {
+    if (master.feature) return;
+    value = value.split('-');
+    if ('page' != value[0] || !value[1]) return;
+    master.feature = value[1];
   });
-
-  // Navigates chapters on keyboard
-  var code = 0;
-  $(doc).keydown(function (ev) {
-    var ift = $.inArray(ev.which, [37, 13, 39]); // Left, Return, Right
-    if (-1 == ift || ev.which == code) return;
-    code = ev.which;
-    $(anav + 'a.btn:eq(' + ift + ')').click();
+  master.counter = 0;
+  master.on = function (ability, worker) {
+    master.counter++;
+    switch (typeof ability) {
+      case 'function':
+        worker = ability;
+        ability = true;
+        break;
+      case 'string':
+        ability = ability == '*' || ability == master.feature;
+        break;
+      case 'object':
+        ability = -1 != $.inArray(master.feature, ability);
+        break;
+      default:
+        ability = false;
+    }
+    if (ability) worker($, master.feature);
+    return master;
+  };
+  return master;
+}(jQuery))
+// SHOWs incoming chapters badge in chapter page
+.on('chapter', function ($, a) {
+  'use strict';
+  a = $('footer nav a.btn:last');
+  if (document.referrer || !a.attr('href')) return;
+  $.getJSON(location.href + '/cd', {}, function (data) {
+    if (data.quantity) a.children('.badge').text(data.quantity).removeClass('hidden');
   });
-
-  // Pops countdown badge of incoming chapters
-  (function () {
-    if (!doc.referrer && $(anav + 'a.btn:last').attr('href'))
-      $.getJSON(location.href + '/cd', {}, function (data) {
-        if (data.quantity)
-          $(anav + '.badge').text(data.quantity).removeClass('hidden');
-      });
-  }());
-});
+})
+// PREPAREs keyboard navigation during chapter pages
+.on('chapter', function ($, which) {
+  'use strict';
+  $(document).keydown(function (event, pos) {
+    pos = $.inArray(event.which, [37, 13, 39]);
+    if (-1 == pos || event.which == which) return;
+    which = event.which;
+    $('footer nav a.btn:eq(' + pos + ')')[0].click();
+  });
+})
+;
