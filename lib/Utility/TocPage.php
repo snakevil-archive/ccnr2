@@ -66,7 +66,7 @@ class TocPage extends Page
      * @param  scalar $property 属性名
      * @return mixed
      */
-    protected function onGetProperty($property)
+    protected function zenGet($property)
     {
         switch ($property) {
             case 'title':

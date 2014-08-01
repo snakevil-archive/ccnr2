@@ -124,4 +124,15 @@ abstract class PageDriver extends ZenCore\Component implements ArrayAccess
 
         return $a_ret;
     }
+
+    /**
+     * 清除数据首尾空白字符。
+     *
+     * @param  string $text 待分析地内容代码
+     * @return string
+     */
+    final protected function trim($text)
+    {
+        return trim(html_entity_decode($text));
+    }
 }

@@ -49,7 +49,7 @@ abstract class Page extends ZenCore\Component
      *
      * @return ZenCore\Type\DateTime
      */
-    protected function zenGetlastModified()
+    public function getLastModified()
     {
         return $this->lastModified;
     }
