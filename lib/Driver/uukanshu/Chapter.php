@@ -50,7 +50,7 @@ class Chapter extends ccnr2\Utility\PageDriver
         if (false === $a_match) {
             throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
         }
-        $s_regex = '@(?:&nbsp;){4}(.+)(?:<br(?:| /)>|<!--)@U';
+        $s_regex = '@(?:(?:&nbsp;){4}|　　)(.+)(?:<br(?:| ?/)>|<!--|\n)@U';
         if (false === preg_match_all($s_regex, $clob, $a_match)) {
             throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
         }
