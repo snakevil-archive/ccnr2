@@ -29,7 +29,7 @@
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
-      <link href="//cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="//s.szen.in/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
       <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">
         <xsl:choose>
           <xsl:when test="$dev = 1">
@@ -42,7 +42,7 @@
     </head>
     <body>
       <xsl:copy-of select="$content" />
-      <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+      <script src="//s.szen.in/jquery/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js">
         <xsl:choose>
           <xsl:when test="$dev = 1">
