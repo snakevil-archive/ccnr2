@@ -43,7 +43,7 @@ class Chapter extends ccnr2\Utility\PageDriver
         if ('正文' == substr($a_ret['title'], 0, 6)) {
             $a_ret['title'] = $this->trim(substr($a_ret['title'], 6));
         }
-        $s_regex = '@<div (?:id="thumb"|class="bottomlink")>@';
+        $s_regex = '@(<center>|<div (?:id="thumb"|class="bottomlink")>)@';
         $a_match = $this->estrstr($clob, $s_regex, true);
         if (false === $a_match) {
             throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
