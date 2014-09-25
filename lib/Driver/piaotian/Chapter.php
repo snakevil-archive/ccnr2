@@ -32,9 +32,9 @@ class Chapter extends ccnr2\Utility\PageDriver
      */
     protected function parse($clob)
     {
-        $clob = iconv('gbk', 'utf-8//IGNORE', $clob);
+        $clob = iconv('gb18030', 'utf-8//IGNORE', $clob);
         $a_ret = array();
-        $s_regex = '@<h1><a href=".+">\S+</a>\s*(?:|正文\s+)([^<]+)</h1>@Ui';
+        $s_regex = '@<h1><a href=".+">\S+</a>\s*(?:|正文\s+)(.+)</h1>@Ui';
         $a_match = $this->estrstr($clob, $s_regex);
         if (!isset($a_match[1])) {
             throw new ccnr2\Driver\ExChapterTitleNotFound($this->ref, $s_regex);

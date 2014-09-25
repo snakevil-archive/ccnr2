@@ -32,7 +32,7 @@ class Chapter extends ccnr2\Utility\PageDriver
      */
     protected function parse($clob)
     {
-        $clob = iconv('gbk', 'utf-8//IGNORE', $clob);
+        $clob = iconv('gb18030', 'utf-8//IGNORE', $clob);
         $a_ret = array();
         $s_regex = '@<h1 id="timu">([^<]+)</h1>@U';
         $a_match = $this->estrstr($clob, $s_regex);

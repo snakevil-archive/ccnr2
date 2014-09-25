@@ -33,7 +33,7 @@ class Toc extends ccnr2\Utility\PageDriver
      */
     protected function parse($clob)
     {
-        $clob = iconv('gbk', 'utf-8//TRANSLIT', $clob);
+        $clob = iconv('gb18030', 'utf-8//TRANSLIT', $clob);
         $a_ret = array();
         $s_regex = '|<title>(\S+)最新章节列表|U';
         $a_match = $this->estrstr($clob, $s_regex);
