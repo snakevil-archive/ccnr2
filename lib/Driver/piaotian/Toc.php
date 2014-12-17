@@ -47,7 +47,7 @@ class Toc extends ccnr2\Utility\PageDriver
             throw new ccnr2\Driver\ExNovelAuthorNotFound($this->ref, $s_regex);
         }
         $a_ret['author'] = $this->trim($a_match[1]);
-        $s_regex = '|</ul>\s+<div class="list">|';
+        $s_regex = '~(</ul>|<div class="mainbody">)\s+<div class="list">~';
         $a_match = $this->estrstr($clob, $s_regex);
         if (false === $a_match) {
             throw new ccnr2\Driver\ExNovelChaptersNotFound($this->ref, $s_regex);
