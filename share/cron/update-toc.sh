@@ -19,6 +19,7 @@ cd `'dirname' "$0"`/../../var;
       [ ! -f "$fd" ] || { \
         fs="$fs "`'basename' "$fd"`; \
         'rm' -f "$fd"; \
+        'curl' "http://szen.in/n/$ID/" > /dev/null 2>&1; \
       }; \
       [ ! -d "cache/$ID" ] || { \
         fd="cache/$ID/index.html"; \
