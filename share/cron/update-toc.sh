@@ -34,7 +34,8 @@ cd `'dirname' "$0"`/../../var;
           'rm' -f "$fd"; \
         }; \
       }; \
-      [ -n "$fs" ] || fs=' SKIPPED'; \
-      fs=":$fs"; \
-      echo `'date' '+%FT%T%:z'`" $ID$fs" >> "$LOG"; \
+      [ -z "$fs" ] || { \
+        fs=":$fs"; \
+        echo `'date' '+%FT%T%:z'`" $ID$fs" >> "$LOG"; \
+      } \
     done
