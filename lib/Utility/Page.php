@@ -70,8 +70,12 @@ abstract class Page extends ZenCore\Component
             $uri = 'http://' . $uri;
             $a_parts = parse_url($uri);
         }
+        $c_driver = array_slice(explode('.', $a_parts['host']), -2, 1)[0];
+        if (is_numeric($c_driver[0])) {
+            $c_driver = '_' . $c_driver;
+        }
         $c_driver = 'snakevil\ccnr2\Driver\\'
-            . array_slice(explode('.', $a_parts['host']), -2, 1)[0] . '\\'
+            . $c_driver . '\\'
             . static::TYPE;
         if (!class_exists($c_driver)) {
             throw new ExPageDriverMissing($a_parts['host']);
