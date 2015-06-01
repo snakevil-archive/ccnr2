@@ -56,7 +56,7 @@ class Chapter extends ccnr2\Utility\PageDriver
         }
         $a_ret['paragraphs'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
-            $a_match[1][$ii] = $this->trim($a_match[1][$ii]);
+            $a_match[1][$ii] = $this->trim(preg_replace('@^(?:<br(?:| ?/)>　　)+(?:&nbsp;)*@', '', $a_match[1][$ii]));
             if ('' != $a_match[1][$ii]) {
                 $a_ret['paragraphs'][] = $a_match[1][$ii];
             }
