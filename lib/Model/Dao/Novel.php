@@ -42,6 +42,10 @@ class Novel extends ccnr2\Component\Dao
             $a_ret['author'] = $o_sxe->xpath('/Novel/Author')[0];
         } else {
             $p_src = 'var/db/' . $id . '/SOURCE';
+            $p_src_ = $p_src . '_';
+            if (is_file($p_src_) && is_readable($p_src_)) {
+                rename($p_src_, $p_src);
+            }
             if (!is_file($p_src) || !is_readable($p_src)) {
                 throw new ExTocDataBroken($id);
             }
