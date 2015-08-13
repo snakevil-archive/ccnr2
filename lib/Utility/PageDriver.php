@@ -133,6 +133,8 @@ abstract class PageDriver extends ZenCore\Component implements ArrayAccess
      */
     final protected function trim($text)
     {
-        return trim(html_entity_decode($text));
+        mb_regex_encoding('utf-8');
+
+        return mb_ereg_replace('[^[:print:]]', '', trim(html_entity_decode($text)));
     }
 }
