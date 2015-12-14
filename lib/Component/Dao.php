@@ -111,6 +111,8 @@ abstract class Dao extends ZenModel\Dao\Dao
     {
         $o_xml = new XMLWriter;
         $o_xml->openMemory();
+        $o_xml->setIndent(true);
+        $o_xml->setIndentString("  ");
         $o_xml->startDocument('1.0', 'utf-8', 'yes');
         $this->addXml($o_xml, $data);
         $o_xml->endDocument();
