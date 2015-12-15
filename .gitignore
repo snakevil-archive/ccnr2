@@ -5,6 +5,7 @@
 !.gitignore
 !composer.json
 
+!bin/
 !etc/
 !include/
 !lib/

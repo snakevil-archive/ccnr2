@@ -1,0 +1,85 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import argparse, os
+
+opts = argparse.ArgumentParser(
+    prog='txt2xml',
+    description='Parses a whole piece of novel in plain text files.',
+    add_help=False)
+opts.add_argument('txt',
+    nargs='?',
+    type=file,
+    help='Path to plain text',
+    metavar='FILE')
+
+try:
+    args = opts.parse_args()
+except IOError as e:
+    opts.error(e.strerror)
+
+if not args.txt:
+    opts.print_help()
+    opts.exit()
+
+name = args.txt.name
+dpath = os.path.dirname(name)
+name = os.path.basename(name)
+index = name.rfind('.')
+if -1 == index:
+    opts.error('Cannot mkdir with same name')
+dpath += '/' + name[0:index]
+
+try:
+    if not os.path.isdir(dpath):
+        os.mkdir(dpath)
+    if not os.access(dpath, os.W_OK):
+       raise OSError(strerror='Directory access denied')
+except OSError as e:
+    opts.error(e.strerror)
+
+chapter_tpl = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Chapter>
+  <Title><![CDATA[{title}]]></Title>
+  <Paragraphs>
+    <Paragraph><![CDATA[{paragraphs}]]></Paragraph>
+  </Paragraphs>
+</Chapter>
+"""
+def save_chapter(id):
+    fh = open('%s/%s.xml' % (dpath, id), 'w')
+    fh.write(chapter_tpl.format(title=chapters[id - 1], paragraphs=']]></Paragraph>\n    <Paragraph><![CDATA['.join(paragraphs)))
+    fh.close()
+
+toc_tpl = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Novel>
+  <Title><![CDATA[{title}]]></Title>
+  <Author><![CDATA[{author}]]></Author>
+  <Chapters>
+    <Chapter><![CDATA[{chapters}]]></Chapter>
+  </Chapters>
+</Novel>
+"""
+def save_toc(title = '', author = ''):
+    fh = open('%s/toc.xml' % dpath, 'w')
+    fh.write(toc_tpl.format(title=title, author=author, chapters=']]></Chapter>\n    <Chapter><![CDATA['.join(chapters)))
+    fh.close()
+
+chapters = []
+paragraphs = []
+for line in args.txt:
+    line = line.rstrip()
+    if not len(line):
+        continue
+    if '　' == line[0:3]:
+        paragraphs.append(line[6:])
+        continue
+    chapters.append(line)
+    if 1 == len(chapters):
+        continue
+    save_chapter(len(chapters) - 1)
+    paragraphs = []
+if len(paragraphs):
+    save_chapter(len(chapters))
+save_toc()
+args.txt.close()
