@@ -40,7 +40,7 @@ class Chapter extends ccnr2\Component\Dao
         if (is_file($p_chapter)) {
             $a_ret['lastModified'] = filemtime($p_chapter);
             $o_sxe = new SimpleXMLElement($p_chapter, LIBXML_NOCDATA, true);
-            $a_ret['ref'] = $o_sxe->xpath('/Chapter/@ref')[0];
+            $a_ret['ref'] = $o_sxe->xpath('/Chapter/@ref')[0] ?: '';
             $a_ret['title'] = $o_sxe->xpath('/Chapter/Title')[0];
             $a_pgs = array();
             foreach ($o_sxe->xpath('/Chapter/Paragraphs/Paragraph') as $ii) {
