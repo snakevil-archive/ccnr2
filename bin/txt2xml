@@ -39,7 +39,7 @@ except OSError as e:
     opts.error(e.strerror)
 
 chapter_tpl = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Chapter>
+<Chapter ref="#{id}">
   <Title><![CDATA[{title}]]></Title>
   <Paragraphs>
     <Paragraph><![CDATA[{paragraphs}]]></Paragraph>
@@ -48,7 +48,7 @@ chapter_tpl = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 """
 def save_chapter(id):
     fh = open('%s/%s.xml' % (dpath, id), 'w')
-    fh.write(chapter_tpl.format(title=chapters[id - 1], paragraphs=']]></Paragraph>\n    <Paragraph><![CDATA['.join(paragraphs)))
+    fh.write(chapter_tpl.format(id=id, title=chapters[id - 1], paragraphs=']]></Paragraph>\n    <Paragraph><![CDATA['.join(paragraphs)))
     fh.close()
 
 toc_tpl = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -56,13 +56,16 @@ toc_tpl = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <Title><![CDATA[{title}]]></Title>
   <Author><![CDATA[{author}]]></Author>
   <Chapters>
-    <Chapter><![CDATA[{chapters}]]></Chapter>
+{chapters}
   </Chapters>
 </Novel>
 """
 def save_toc(title = '', author = ''):
+    cs = []
+    for (cid, ctitle) in enumerate(chapters):
+        cs.append('    <Chapter ref="#%d"><![CDATA[%s]]></Chapter>' % (1 + cid, ctitle))
     fh = open('%s/toc.xml' % dpath, 'w')
-    fh.write(toc_tpl.format(title=title, author=author, chapters=']]></Chapter>\n    <Chapter><![CDATA['.join(chapters)))
+    fh.write(toc_tpl.format(title=title, author=author, chapters='\n'.join(cs)))
     fh.close()
 
 chapters = []
