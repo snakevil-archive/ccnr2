@@ -3,7 +3,7 @@
  * 定义小说数据访问对象。
  *
  * @author    Snakevil Zen <zsnakevil@gmail.com>
- * @copyright © 2014 SZen.in
+ * @copyright © 2016 SZen.in
  * @license   GPL-3.0+
  * @license   CC-BY-NC-ND-3.0
  */
@@ -81,6 +81,7 @@ class Novel extends ccnr2\Component\Dao
                 throw new ExTocDataBroken($id);
             }
             touch($p_toc, $o_toc->lastModified->getTimestamp());
+            touch($p_src, time());
             $a_ret['title'] = $o_toc->title;
             $a_ret['author'] = $o_toc->author;
             $a_ret['lastModified'] = $o_toc->lastModified->getTimestamp();

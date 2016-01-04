@@ -3,7 +3,7 @@
  * 定义章节数据访问对象。
  *
  * @author    Snakevil Zen <zsnakevil@gmail.com>
- * @copyright © 2014 SZen.in
+ * @copyright © 2016 SZen.in
  * @license   GPL-3.0+
  * @license   CC-BY-NC-ND-3.0
  */
@@ -92,6 +92,7 @@ class Chapter extends ccnr2\Component\Dao
                 throw new ExChapterDataBroken($id);
             }
             touch($p_chapter, $o_chapter->lastModified->getTimestamp());
+            touch($p_src, time());
             $a_ret['title'] = $o_chapter->title;
             $a_ret['paragraphs'] = json_encode($a_pgs);
             $a_ret['lastModified'] = $o_chapter->lastModified->getTimestamp();
