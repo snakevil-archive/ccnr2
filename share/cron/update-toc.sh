@@ -16,7 +16,7 @@ cd `'dirname' "$0"`/../../var;
   | while read id; do
     id=`'basename' $('dirname' "$id")`;
     toc="db/$id/toc.xml";
-    [ ! -f "$id" ] || {
+    [ ! -f "$toc" ] || {
         'rm' -f "$toc";
         #'curl' "http://szen.in/n/$id/" > /dev/null 2>&1;
         echo `'date' '+%FT%T%:z'`" $id" >> "$LOG";
