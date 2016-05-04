@@ -21,12 +21,6 @@ location ~ ^(/n)(/\w+/)$ {
     rewrite         . "${prefix}${cache}${novel}index.html";
 }
 
-location ~ ^(/n)(/\w+/\d+)$ {
-    set             $prefix $1;
-    set             $novel $2;
-    rewrite         . "${prefix}${cache}${novel}.html";
-}
-
 location ~ ^(/n)(/\w+)(/\d+)\.html$ {
     set             $prefix $1;
     set             $novel $2;
@@ -34,6 +28,12 @@ location ~ ^(/n)(/\w+)(/\d+)\.html$ {
     if (-d $db_root$novel) {
         rewrite     . $prefix$novel$chapter permanent;
     }
+}
+
+location ~ ^(/n)(/\w+/\d+)$ {
+    set             $prefix $1;
+    set             $novel $2;
+    rewrite         . "${prefix}${cache}${novel}.html";
 }
 
 location ~ ^/n/\w+/\d+/cd$ {
