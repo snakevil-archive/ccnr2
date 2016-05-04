@@ -3,7 +3,7 @@
  * 定义章节列表页视图。
  *
  * @author    Snakevil Zen <zsnakevil@gmail.com>
- * @copyright © 2014 SZen.in
+ * @copyright © 2016 SZen.in
  * @license   GPL-3.0+
  * @license   CC-BY-NC-ND-3.0
  */
@@ -45,16 +45,6 @@ class Toc extends ZenView\View
         );
         $o_xslt->importStyleSheet($o_xsl);
 
-        return str_replace(
-            array(
-                '<link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">',
-                '<script src="//s.szen.in/n/ccnr2.min.js"></script>'
-            ),
-            array(
-                '<style>' . file_get_contents('share/static/ccnr2.min.css') . '</style>',
-                '<script>' . file_get_contents('share/static/ccnr2.min.js') . '</script>'
-            ),
-            $o_xslt->transformToXML($o_xml)
-        );
+        return $o_xslt->transformToXML($o_xml);
     }
 }
