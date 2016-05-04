@@ -20,10 +20,10 @@
         "ext-SimpleXML": "*",
         "ext-xmlwriter": "*",
         "ext-xsl": "*",
-        "zen/core": "@dev",
-        "zen/web-application": "@dev",
-        "zen/model": "@dev",
-        "zen/view": "@dev",
+        "zen/core": "*",
+        "zen/web-application": "*",
+        "zen/model": "*",
+        "zen/view": "*",
         "snakevil/zen": "@dev"
     },
     "autoload": {
@@ -34,7 +34,6 @@
     "config": {
         "preferred-install": "dist",
         "vendor-dir": "include",
-        "bin-dir": "bin",
-        "notify-on-install": false
+        "bin-dir": "bin"
     }
 }
