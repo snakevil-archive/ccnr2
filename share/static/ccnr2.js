@@ -1,34 +1,54 @@
 'use strict';
-(function ($, master) {
-  master = {};
-  $.each($('html').attr('class').split(/\s+/), function (index, value) {
-    if (master.feature) return;
-    value = value.split('-');
-    if ('page' != value[0] || !value[1]) return;
-    master.feature = value[1];
-  });
-  master.counter = 0;
-  master.on = function (ability, worker) {
-    master.counter++;
-    switch (typeof ability) {
-      case 'function':
-        worker = ability;
-        ability = true;
-        break;
-      case 'string':
-        ability = ability == '*' || ability == master.feature;
-        break;
-      case 'object':
-        ability = -1 != $.inArray(master.feature, ability);
-        break;
-      default:
-        ability = false;
+(function ($, ccnr2) {
+  return {
+    _page: (function (page) {
+      $.each($('html').attr('class').split(/\s+/), function (index, value) {
+        if (page) return;
+        value = value.split('-');
+        if ('page' != value[0] || !value[1]) return;
+        page = value[1];
+      });
+      return page || 'unknown';
+    }()),
+    _hooks: [],
+    _invoke: function (page, procedure) {
+      switch (typeof page) {
+        case 'function':
+          procedure = page;
+          page = true;
+          break;
+        case 'string':
+          page = page == '*' || page == this._page;
+          break;
+        case 'object':
+          page = -1 != $.inArray(this._page, page);
+          break;
+        default:
+          page = false;
+      }
+      if (page) procedure.call(this, $, this._page);
+    },
+    on: function (page, procedure) {
+      this._hooks.push([page, procedure]);
+      this._invoke(page, procedure);
+      return this;
+    },
+    refresh: function () {
+      $.each(this._hooks, function (index, hook) {
+        this._invoke(hook[0], hook[1]);
+      });
     }
-    if (ability) worker($, master.feature);
-    return master;
   };
-  return master;
 }(jQuery))
+// TOGGLEs novel title on scrolling
+.on('toc', function ($, win, body) {
+  win = window;
+  body = $(document.body);
+  $(win).scroll(function () {
+    if (0 < win.scrollY) body.addClass('scrolled');
+    else body.removeClass('scrolled');
+  });
+})
 // SHOWs incoming chapters badge in chapter page
 .on('chapter', function ($, a) {
   a = $('footer nav a:last');

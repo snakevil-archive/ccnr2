@@ -40,6 +40,10 @@ a {
 
 .page-toc body {
   margin-top: 7.5em;
+  transition: margin-top .25s;
+  -moz-transition: margin-top .25s;
+  -webkit-transition: margin-top .25s;
+  -o-transition: margin-top .25s;
 }
 header {
   position: fixed;
@@ -50,9 +54,17 @@ header {
   padding: 2.5em 0 1em 0;
   text-align: center;
   color: #dfd;
+  transition: padding .25s;
+  -moz-transition: padding .25s;
+  -webkit-transition: padding .25s;
+  -o-transition: padding .25s;
 }
 h1 {
   font-size: 2em;
+  transition: font-size .25s;
+  -moz-transition: font-size .25s;
+  -webkit-transition: font-size .25s;
+  -o-transition: font-size .25s;
 }
 address {
   margin-top: .5em;
