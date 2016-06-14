@@ -29,7 +29,6 @@
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
-      <link href="//s.szen.in/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
       <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">
         <xsl:choose>
           <xsl:when test="$dev = 1">

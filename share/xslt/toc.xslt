@@ -22,22 +22,20 @@
       <xsl:with-param name="author" select="Author" />
       <xsl:with-param name="content">
         <section>
-          <header class="css-cover">
-            <div class="container">
-              <div class="row">
-                <xsl:apply-templates select="Title" />
-                <xsl:apply-templates select="Author" />
-              </div>
-            </div>
+          <header>
+            <xsl:apply-templates select="Title" />
+            <xsl:apply-templates select="Author" />
           </header>
-          <xsl:apply-templates select="Chapters" />
+          <nav>
+            <xsl:apply-templates select="Chapters" />
+          </nav>
         </section>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="/Novel/Title">
-    <h1 class="col-xs-12 text-nowrap text-right">
+    <h1>
       <xsl:text><![CDATA[《]]></xsl:text>
       <xsl:value-of select="." />
       <xsl:text><![CDATA[》]]></xsl:text>
@@ -45,21 +43,19 @@
   </xsl:template>
 
   <xsl:template match="/Novel/Author">
-    <address class="col-xs-12 hidden-xs text-nowrap text-right">
+    <address>
       <xsl:value-of select="." />
     </address>
   </xsl:template>
 
   <xsl:template match="/Novel/Chapters">
-    <nav class="container">
-      <ul class="row list-inline">
-        <xsl:apply-templates />
-      </ul>
-    </nav>
+    <ol>
+      <xsl:apply-templates />
+    </ol>
   </xsl:template>
 
   <xsl:template match="/Novel/Chapters/Chapter">
-    <li class="col-xs-offset-1 col-xs-10 col-sm-offset-0 col-sm-4 text-nowrap">
+    <li>
       <a>
         <xsl:attribute name="href">
           <xsl:number />

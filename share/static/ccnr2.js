@@ -1,6 +1,5 @@
-/* -*- tab-width: 2 -*- */
+'use strict';
 (function ($, master) {
-  'use strict';
   master = {};
   $.each($('html').attr('class').split(/\s+/), function (index, value) {
     if (master.feature) return;
@@ -32,8 +31,7 @@
 }(jQuery))
 // SHOWs incoming chapters badge in chapter page
 .on('chapter', function ($, a) {
-  'use strict';
-  a = $('footer nav a.btn:last');
+  a = $('footer nav a:last');
   if (document.referrer || !a.attr('href')) return;
   $.getJSON(location.href + '/cd', {}, function (data) {
     if (data.quantity) a.children('.badge').text(data.quantity).removeClass('hidden');
@@ -41,12 +39,11 @@
 })
 // PREPAREs keyboard navigation during chapter pages
 .on('chapter', function ($, which) {
-  'use strict';
   $(document).keydown(function (event, pos) {
     pos = $.inArray(event.which, [37, 13, 39]);
     if (-1 == pos || event.which == which) return;
     which = event.which;
-    $('footer nav a.btn:eq(' + pos + ')')[0].click();
+    $('footer nav a:eq(' + pos + ')')[0].click();
   });
 })
 ;
