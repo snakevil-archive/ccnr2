@@ -40,6 +40,13 @@
     }
   };
 }(jQuery))
+// AVOIDs links of illegal previous or next chapter
+.on('chapter', function ($) {
+  $('a').click(function (ev, id) {
+    id = $(this).attr('href');
+    return '#' != id;
+  });
+})
 // TOGGLEs novel title on scrolling
 .on('toc', function ($, win, body) {
   win = window;
