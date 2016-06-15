@@ -36,6 +36,12 @@ location ~ ^(/n)(/\w+/\d+)$ {
     rewrite         . "${prefix}${cache}${novel}.html";
 }
 
+location ~ ^(/n)(/\w+/\d+\.json)$ {
+    set             $prefix $1;
+    set             $novel $2;
+    rewrite         . "${prefix}${cache}${novel}";
+}
+
 location ~ ^/n/\w+/\d+/cd$ {
     gzip        off;
     error_page  404 = @php-ccnr2;
