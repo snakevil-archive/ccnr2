@@ -32,11 +32,10 @@ class ChapterData extends ZenView\View
     {
         $a_ret = array(
             'n' => $params['chapter']->novel->title,
-            'a' => $params['chapter']->novel->author,
             't' => $params['chapter']->title,
             'p' => $params['chapter']->paragraphs,
-            '-' => '',
-            '+' => '',
+            '-' => '#',
+            '+' => '#',
         );
         $b_hit = false;
         foreach ($params['chapter']->novel->getChapters() as $o_chapter) {

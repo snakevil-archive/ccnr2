@@ -157,6 +157,9 @@ ul a[title] {
   background: #333;
   cursor: auto;
 }
+ul a.prefetched {
+  color: #f90;
+}
 ul :first-child a {
   border-radius: .75em 0 0 .75em;
   margin-right: 1px;
@@ -173,6 +176,7 @@ a .hidden {
 a .badge {
   font-size: .5em;
   vertical-align: top;
+  color: #dfd;
 }
 
 @media (max-width: 1024px) {
