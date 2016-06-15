@@ -40,10 +40,6 @@ a {
 
 .page-toc body {
   margin-top: 7.5em;
-  transition: margin-top .25s;
-  -moz-transition: margin-top .25s;
-  -webkit-transition: margin-top .25s;
-  -o-transition: margin-top .25s;
 }
 header {
   position: fixed;
