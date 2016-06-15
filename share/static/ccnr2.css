@@ -126,6 +126,9 @@ p {
   margin: 1em 0;
   word-wrap: break-word;
 }
+p.read {
+  color: #999;
+}
 footer {
   position: fixed;
   right: .5em;

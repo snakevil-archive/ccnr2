@@ -40,28 +40,20 @@
     }
   };
 }(jQuery))
-// AVOIDs links of illegal previous or next chapter
-.on('chapter', function ($) {
-  $('a').click(function (ev, id) {
-    id = $(this).attr('href');
-    return '#' != id;
-  });
-})
 // TOGGLEs novel title on scrolling
-.on('toc', function ($, win, body) {
-  win = window;
-  body = $(document.body);
-  $(win).scroll(function () {
-    if (0 < win.scrollY) body.addClass('scrolled');
-    else body.removeClass('scrolled');
+.on('toc', function ($, $body) {
+  $body = $(document.body);
+  $(window).scroll(function () {
+    if (0 < window.scrollY) $body.addClass('scrolled');
+    else $body.removeClass('scrolled');
   });
 })
 // SHOWs incoming chapters badge in chapter page
-.on('chapter', function ($, a) {
-  a = $('footer nav a:last');
-  if (document.referrer || !a.attr('href')) return;
+.on('chapter', function ($, $a) {
+  $a = $('footer nav a:last');
+  if (document.referrer || !$a.attr('href')) return;
   $.getJSON(location.href + '/cd', {}, function (data) {
-    if (data.quantity) a.children('.badge').text(data.quantity).removeClass('hidden');
+    if (data.quantity) $a.children('.badge').text(data.quantity).removeClass('hidden');
   });
 })
 // PREPAREs keyboard navigation during chapter pages
@@ -71,6 +63,28 @@
     if (-1 == pos || event.which == which) return;
     which = event.which;
     $('footer nav a:eq(' + pos + ')')[0].click();
+  });
+})
+// DIMs read paragraphes
+.on('chapter', function ($, $ps) {
+  $ps = $('p');
+  $(window).scroll(function (length) {
+    length = window.scrollY;
+    $.each($ps, function (index, p, $p, offset, height) {
+      $p = $(p);
+      offset = $p.offset().top;
+      if (offset > length || 'read' == $p.attr('class')) return;
+      height = $p.height();
+      if (length < offset + height) return;
+      $p.attr('class', 'read');
+    });
+  });
+})
+// AVOIDs links of illegal previous or next chapter
+.on('chapter', function ($) {
+  $('a').click(function (ev, id) {
+    id = $(this).attr('href');
+    return '#' != id;
   });
 })
 ;
