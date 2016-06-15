@@ -11,14 +11,13 @@
 namespace snakevil\ccnr2\Model\Dao;
 
 use SimpleXMLElement;
-
 use snakevil\ccnr2;
 
 /**
  * 小说数据访问对象。
  *
- * @package snakevil\ccnr2
  * @version 2.0.0
+ *
  * @since   2.0.0
  */
 class Novel extends ccnr2\Component\Dao
@@ -26,23 +25,24 @@ class Novel extends ccnr2\Component\Dao
     /**
      * {@inheritdoc}
      *
-     * @param  scalar   $id 编号
+     * @param scalar $id 编号
+     *
      * @return scalar[]
      *
      * @throws ExTocDataBroken 当数据读取失败时
      */
     public function read($id)
     {
-        $p_toc = 'var/db/' . $id . '/toc.xml';
+        $p_toc = 'var/db/'.$id.'/toc.xml';
         $a_ret = array('id' => $id);
         if (is_file($p_toc)) {
             $a_ret['lastModified'] = filemtime($p_toc);
             $o_sxe = new SimpleXMLElement($p_toc, LIBXML_NOCDATA, true);
-            $a_ret['title'] = $o_sxe->xpath('/Novel/Title')[0];
-            $a_ret['author'] = $o_sxe->xpath('/Novel/Author')[0];
+            $a_ret['title'] = (string) $o_sxe->xpath('/Novel/Title')[0];
+            $a_ret['author'] = (string) $o_sxe->xpath('/Novel/Author')[0];
         } else {
-            $p_src = 'var/db/' . $id . '/SOURCE';
-            $p_src_ = $p_src . '_';
+            $p_src = 'var/db/'.$id.'/SOURCE';
+            $p_src_ = $p_src.'_';
             if (is_file($p_src_) && is_readable($p_src_)) {
                 rename($p_src_, $p_src);
             }
@@ -55,25 +55,25 @@ class Novel extends ccnr2\Component\Dao
                 'children' => array(
                     array(
                         'name' => 'Title',
-                        'cdata' => $o_toc->title
+                        'cdata' => $o_toc->title,
                     ),
                     array(
                         'name' => 'Author',
-                        'cdata' => $o_toc->author
+                        'cdata' => $o_toc->author,
                     ),
                     array(
                         'name' => 'Chapters',
-                        'children' => array()
-                    )
-                )
+                        'children' => array(),
+                    ),
+                ),
             );
             foreach ($o_toc->chapters as $ii => $jj) {
                 $a_xml['children'][2]['children'][] = array(
                     'name' => 'Chapter',
                     'cdata' => $jj,
                     'attributes' => array(
-                        'ref' => $ii
-                    )
+                        'ref' => $ii,
+                    ),
                 );
             }
             $s_lob = $this->xml($a_xml);

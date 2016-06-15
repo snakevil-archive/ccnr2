@@ -31,7 +31,9 @@ class ChapterData extends ZenView\View
     protected function onRender($params)
     {
         $a_ret = array(
-            't' => (string) $params['chapter']->title,
+            'n' => $params['chapter']->novel->title,
+            'a' => $params['chapter']->novel->author,
+            't' => $params['chapter']->title,
             'p' => $params['chapter']->paragraphs,
             '-' => '',
             '+' => '',
