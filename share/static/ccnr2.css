@@ -136,31 +136,36 @@ footer {
   left: .5em;
   z-index: 1;
 }
+footer nav {
+  text-align: center;
+  position: relative;
+}
 ul {
-  float: right;
+  display: inline-block;
 }
 ul li {
   width: auto !important;
 }
 ul a {
   background: #999;
-  color: #999;
+  color: #dfd;
   display: block;
-  padding: .25em;
+  padding: .25em .5em;
+  cursor: default;
 }
 ul a[title] {
   background: #333;
-  color: #dfd;
+  cursor: auto;
 }
 ul :first-child a {
   border-radius: .75em 0 0 .75em;
   margin-right: 1px;
-  padding-left: .5em;
+  padding-left: 1.25em;
 }
 ul :last-child a {
   border-radius: 0 .75em .75em 0;
   margin-left: 1px;
-  padding-right: .5em;
+  padding-right: 1.25em;
 }
 a .hidden {
   display: none;
@@ -189,9 +194,6 @@ a .badge {
 }
 
 @media (max-width: 480px) {
-  ul {
-    float: left;
-  }
   li {
     width: 100%;
   }
