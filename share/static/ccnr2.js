@@ -97,7 +97,7 @@
   });
 })
 
-// PREPAREs keyboard navigation during chapter pages
+// NAVIGATEs sibling chapter page on key press
 .once('chapter', function ($, _this) {
   _this = this;
   $(document).keydown(function (event, pos) {
@@ -105,6 +105,15 @@
     if (-1 == pos || event.which == _this.which) return;
     _this.which = event.which;
     $('footer nav a:eq(' + pos + ')').click();
+  });
+})
+
+// NAVIGATEs sibling chapter page on swiping
+.once('chapter', function ($) {
+  this.$h.on('swipeleft', function () {
+    $('footer nav a:last').click();
+  }).on('swiperight', function () {
+    $('footer nav a:first').click();
   });
 })
 
