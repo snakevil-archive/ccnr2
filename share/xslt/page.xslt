@@ -42,6 +42,7 @@
     <body>
       <xsl:copy-of select="$content" />
       <script src="//s.szen.in/jquery/jquery.min.js"></script>
+      <script src="//s.szen.in/hammer/hammer.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js">
         <xsl:choose>
           <xsl:when test="$dev = 1">

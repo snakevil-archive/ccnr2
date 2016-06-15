@@ -1,5 +1,6 @@
 'use strict';
-(function ($) {
+(function ($, $h) {
+  $h = Hammer;
   return {
     page: (function (page) {
       $.each($('html').attr('class').split(/\s+/), function (index, value) {
@@ -12,6 +13,14 @@
     }()),
     state: 'pushState' in history,
     which: 0,
+    $h: new $h.Manager(document.body, {
+      recognizers: [
+        [$h.Tap],
+        [$h.Swipe, {
+          direction: $h.DIRECTION_HORIZONTAL
+        }]
+      ]
+    }),
     _on: [],
     _invoke: function (page, procedure, _this) {
       _this = this;
@@ -114,6 +123,17 @@
   });
 })
 
+// SCROLLs vertical further on tapping
+.once('chapter', function ($) {
+  this.$h.on('tap', function (event, distance) {
+    distance = $(window).height();
+    if ($(event.target).closest('ul').length) return;
+    $('html, body').animate({
+      scrollTop: (event.center.y * 2 > distance ? '+' : '-') + '=' + distance
+    });
+  });
+})
+
 // AVOIDs links of illegal previous or next chapter
 .on('chapter', function ($) {
   $('a[href="#"]').click(function () {
@@ -121,14 +141,15 @@
   });
 })
 
+////////////////////////////////////////////////////////////// CHAPTER STATE ///
+
 // CONVERTs to history state
 .once('chapter', function ($, _this) {
   _this = this;
   if (!_this.state) return;
-  window.onpopstate = function (ev) {
-    console.warn(ev);
+  $(window).on('popstate', function (ev) {
     if (history.state) _this.update(history.state);
-  };
+  });
   $(document).ready(function (id, state) {
     id = location.href.replace(/^.*\//, '');
     state = {
@@ -151,7 +172,6 @@
   id = $a.attr('href');
   _this = this;
   if (!_this.state || '#' == id) return;
-  console.error('breakpoint');
   $.getJSON(id + '.json', {}, function (data) {
     $a.attr('class', 'prefetched');
     _this.$state = data;
