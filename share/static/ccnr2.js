@@ -135,7 +135,7 @@
 // SCROLLs vertical further on tapping
 .once('chapter', function ($) {
   this.$h.on('tap', function (event, distance) {
-    distance = $(window).height();
+    distance = Math.round($(window).height() * 2 / 3);
     if ($(event.target).closest('ul').length) return;
     $('html, body').animate({
       scrollTop: (event.center.y * 2 > distance ? '+' : '-') + '=' + distance
