@@ -16,7 +16,7 @@
 
 body {
   overflow-x: hidden;
-  font: 16px/1 "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif;
+  font: 20px/1 "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif;
   background: #dfd;
   color: #333;
   margin: .5em;
@@ -189,9 +189,6 @@ a .badge {
 }
 
 @media (max-width: 768px) {
-  body {
-    font-size: 20px;
-  }
   li {
     width: 50%;
   }
