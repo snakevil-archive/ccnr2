@@ -117,21 +117,6 @@
   });
 })
 
-// DIMs read paragraphes temporarily
-.once('chapter', function ($) {
-  $(window).scroll(function (length) {
-    length = window.scrollY;
-    $('p').each(function (index, p, $p, offset, height) {
-      $p = $(p);
-      offset = $p.offset().top;
-      if (offset > length || 'read' == $p.attr('class')) return;
-      height = $p.height();
-      if (length < offset + height) return;
-      $p.attr('class', 'read');
-    });
-  });
-})
-
 // SCROLLs vertical further on tapping
 .once('chapter', function ($) {
   this.$h.on('tap', function (event, distance) {
