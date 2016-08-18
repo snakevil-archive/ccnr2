@@ -1,6 +1,5 @@
 .*
 
 !.gitignore
-!.cache
 !.db
 !_
