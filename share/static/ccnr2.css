@@ -129,6 +129,9 @@ p {
 p.read {
   color: #999;
 }
+.hidden {
+  display: none;
+}
 footer {
   position: fixed;
   right: .5em;
@@ -169,9 +172,6 @@ ul :last-child a {
   border-radius: 0 .75em .75em 0;
   margin-left: 1px;
   padding-right: 1.25em;
-}
-a .hidden {
-  display: none;
 }
 a .badge {
   font-size: .5em;
