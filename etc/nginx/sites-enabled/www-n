@@ -1,29 +1,30 @@
 # -*- nginx -*-
 
-    error_log /tmp/debug.log debug;
-
 location ~ ^/n/([^/]+)(/\d+)$ {
-    try_files /n/.cache/$1$2.xml @php-ccnr2;
+    try_files /n/.db/$1$2.xml @php-ccnr2;
     sub_filter_types text/xml;
     sub_filter_last_modified on;
     sub_filter '<Chapter ' '<?xml-stylesheet type="text/xsl" href="/n/_/chapter.xslt"?>\n<Chapter toc="/n/$1/" ';
 }
 
 location ~ ^/n(/[^/]+/)$ {
-    try_files /n/.cache$1/toc.xml @php-ccnr2;
+    try_files /n/.db$1/toc.xml @php-ccnr2;
     sub_filter_types text/xml;
     sub_filter_last_modified on;
     sub_filter '<Novel>' '<?xml-stylesheet type="text/xsl" href="/n/_/toc.xslt"?>\n<Novel>';
 }
 
 location ~ ^/n(/[^/]+)$ {
-    if (-d $document_root/n/.cache$1) {
+    if (-d $document_root/n/.db$1) {
         return 301 /n$1/;
     }
     return 404;
 }
 
 location /n/ {
+    error_log /tmp/debug.log debug;
+    rewrite ^/n(/.*)$ $1 break;
+    try_files /n$uri /n/.cache$uri @php-ccnr2;
 }
 
 location @php-ccnr2 {

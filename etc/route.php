@@ -10,18 +10,12 @@
 $NS = 'snakevil\ccnr2\Controller\\';
 
 return array(
-    '/n/' => array(
+    '/' => array(
         '' => $NS.'Index',
-        '\.cache/' => array(
-            '(?P<novel>\w+)/' => array(
-                'index\.html' => $NS.'NovelIndex',
-                '(?P<chapter>\d+)\.html' => $NS.'ChapterRead',
-                '(?P<chapter>\d+)\.json' => $NS.'ChapterData',
-            ),
-        ),
         '(?P<novel>\w+)/' => array(
             '(?P<chapter>\d+)' => array(
                 '/cd' => $NS.'ChapterOffset',
+                '\.json' => $NS.'ChapterData',
             ),
         ),
     ),
