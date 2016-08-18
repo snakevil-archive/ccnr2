@@ -10,8 +10,6 @@ LOG=log/`'basename' "$0" .sh`.log
 
 cd `'dirname' "$0"`/../../var;
 
-'rm' -fr cache/*
-
 'find' db -mindepth 2 -maxdepth 2 -type f -name 'SOURCE' -mmin +60 \
   | while read id; do
     id=`'basename' $('dirname' "$id")`;

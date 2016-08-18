@@ -10,16 +10,13 @@
 
 namespace snakevil\ccnr2\View;
 
-use DOMDocument;
-use XSLTProcessor;
-
 use Zen\View as ZenView;
 
 /**
  * 章节阅读页视图。
  *
- * @package snakevil\ccnr2
  * @version 2.0.0
+ *
  * @since   2.0.0
  */
 class Chapter extends ZenView\View
@@ -27,25 +24,17 @@ class Chapter extends ZenView\View
     /**
      * {@inheritdoc}
      *
-     * @param  mixed[] $params 渲染参数集合
+     * @param mixed[] $params 渲染参数集合
+     *
      * @return string
      */
     protected function onRender($params)
     {
-        $o_xml = new DOMDocument;
-        $o_xml->load('var/db/' . str_replace('#', '/', $params['chapter']) . '.xml');
-        $o_xsl = new DOMDocument;
-        $o_xsl->load('share/xslt/chapter.xslt');
-        $o_xslt = new XSLTProcessor;
-        $o_xslt->setParameter(
-            '',
-            array(
-                'toc' => realpath('var/db/' . $params['chapter']->novel . '/toc.xml'),
-                'dev' => isset($params['@dev']) && $params['@dev']
-            )
-        );
-        $o_xslt->importStyleSheet($o_xsl);
+        list($s_novel, $s_id) = explode('#', $params['chapter']);
 
-        return $o_xslt->transformToXML($o_xml);
+        return str_replace('<Chapter ',
+            "<?xml-stylesheet type=\"text/xsl\" href=\"/n/_/chapter.xslt\"?>\n<Chapter toc=\"/n/$s_novel/\" ",
+            file_get_contents("var/db/$s_novel/$s_id.xml")
+        );
     }
 }

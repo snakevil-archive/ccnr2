@@ -10,16 +10,13 @@
 
 namespace snakevil\ccnr2\View;
 
-use DOMDocument;
-use XSLTProcessor;
-
 use Zen\View as ZenView;
 
 /**
  * 章节列表页视图。
  *
- * @package snakevil\ccnr2
  * @version 2.0.0
+ *
  * @since   2.0.0
  */
 class Toc extends ZenView\View
@@ -27,24 +24,15 @@ class Toc extends ZenView\View
     /**
      * {@inheritdoc}
      *
-     * @param  mixed[] $params 渲染参数集合
+     * @param mixed[] $params 渲染参数集合
+     *
      * @return string
      */
     protected function onRender($params)
     {
-        $o_xml = new DOMDocument;
-        $o_xml->load('var/db/' . $params['novel'] . '/toc.xml');
-        $o_xsl = new DOMDocument;
-        $o_xsl->load('share/xslt/toc.xslt');
-        $o_xslt = new XSLTProcessor;
-        $o_xslt->setParameter(
-            '',
-            array(
-                'dev' => isset($params['@dev']) && $params['@dev']
-            )
+        return str_replace('<Novel>',
+            "<?xml-stylesheet type=\"text/xsl\" href=\"/n/_/toc.xslt\"?>\n<Novel>",
+            file_get_contents("var/db/${params[novel]}/toc.xml")
         );
-        $o_xslt->importStyleSheet($o_xsl);
-
-        return $o_xslt->transformToXML($o_xml);
     }
 }

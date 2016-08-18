@@ -15,24 +15,19 @@ use snakevil\zen;
 /**
  * 抽象控制器组件。
  *
- * @package snakevil\ccnr2
  * @version 2.0.0
+ *
  * @since   2.0.0
  */
 abstract class Controller extends zen\Controller\Web
 {
     /**
      * {@inheritdoc}
-     *
-     * @return void
      */
     protected function onClose()
     {
         if (isset($this->input['server:HTTP_ACCEPT_ENCODING'])) {
             $this->output->header('Vary', 'Accept-Encoding');
         }
-        $this->output
-            ->header('X-Cache', 'MISS')
-            ->header('X-Powered-By', 'CCNRv2');
     }
 }

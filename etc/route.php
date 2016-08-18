@@ -13,6 +13,7 @@ return array(
     '/n/' => array(
         '' => $NS.'Index',
         '(?P<novel>\w+)/' => array(
+            '' => $NS.'NovelIndex',
             '(?P<chapter>\d+)' => $NS.'ChapterRead',
         ),
     ),
