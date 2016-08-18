@@ -1,6 +1,5 @@
 'use strict';
-(function ($, $h) {
-  $h = Hammer;
+(function ($) {
   return {
     page: (function (page) {
       $.each($('html').attr('class').split(/\s+/), function (index, value) {
@@ -13,14 +12,6 @@
     }()),
     state: 'pushState' in history,
     which: 0,
-    $h: new $h.Manager(document.body, {
-      recognizers: [
-        [$h.Tap],
-        [$h.Swipe, {
-          direction: $h.DIRECTION_HORIZONTAL
-        }]
-      ]
-    }),
     _on: [],
     _invoke: function (page, procedure, _this) {
       _this = this;
@@ -105,26 +96,6 @@
     if (-1 == pos || event.which == _this.which) return;
     _this.which = event.which;
     $('footer nav a:eq(' + pos + ')').click();
-  });
-})
-
-// NAVIGATEs sibling chapter page on swiping
-.once('chapter', function ($) {
-  this.$h.on('swipeleft', function () {
-    $('footer nav a:last').click();
-  }).on('swiperight', function () {
-    $('footer nav a:first').click();
-  });
-})
-
-// SCROLLs vertical further on tapping
-.once('chapter', function ($) {
-  this.$h.on('tap', function (event, distance) {
-    distance = Math.round($(window).height() * 2 / 3);
-    if ($(event.target).closest('ul').length) return;
-    $('html, body').animate({
-      scrollTop: (event.center.y * 2 > distance ? '+' : '-') + '=' + distance
-    });
   });
 })
 

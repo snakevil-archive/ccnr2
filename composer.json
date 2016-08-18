@@ -35,5 +35,9 @@
         "preferred-install": "dist",
         "vendor-dir": "include",
         "bin-dir": "bin"
+    },
+    "scripts": {
+        "css": "uglify -s share/static/ccnr2.css -o share/static/ccnr2.min.css -c",
+        "js": "uglify -s share/static/ccnr2.js -o share/static/ccnr2.min.js"
     }
 }

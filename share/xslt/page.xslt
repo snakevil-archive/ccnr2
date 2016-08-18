@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:template name="page">
-    <xsl:param name="dev" />
     <xsl:param name="type" />
     <xsl:param name="title" />
     <xsl:param name="author" />
@@ -29,29 +28,12 @@
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
-      <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css">
-        <xsl:choose>
-          <xsl:when test="$dev = 1">
-            <xsl:attribute name="href">
-              <xsl:text><![CDATA[//s.szen.in/n/ccnr2.css]]></xsl:text>
-            </xsl:attribute>
-          </xsl:when>
-        </xsl:choose>
-      </link>
+      <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
     </head>
     <body>
       <xsl:copy-of select="$content" />
       <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
-      <script src="//cdn.bootcss.com/hammer.js/2.0.8/hammer.min.js"></script>
-      <script src="//s.szen.in/n/ccnr2.min.js">
-        <xsl:choose>
-          <xsl:when test="$dev = 1">
-            <xsl:attribute name="src">
-              <xsl:text><![CDATA[//s.szen.in/n/ccnr2.js]]></xsl:text>
-            </xsl:attribute>
-          </xsl:when>
-        </xsl:choose>
-      </script>
+      <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>
     </html>
   </xsl:template>

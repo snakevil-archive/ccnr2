@@ -22,6 +22,9 @@ location ~ ^/n(/[^/]+)$ {
 }
 
 location /n/ {
+    types {
+        text/xml xslt;
+    }
     error_log /tmp/debug.log debug;
     rewrite ^/n(/.*)$ $1 break;
     try_files /n$uri /n/.cache$uri @php-ccnr2;
