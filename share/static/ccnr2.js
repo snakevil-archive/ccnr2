@@ -178,8 +178,8 @@
       _state.p.push($(p).text());
     });
     history.replaceState(_state, '', location.href.replace(/^.*\//, ''));
+    done();
   });
-  done();
 })
 
 // PREFETCHs the next chapter data
