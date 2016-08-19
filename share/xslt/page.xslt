@@ -30,7 +30,9 @@
       <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
     </head>
     <body>
-      <xsl:copy-of select="$content" />
+      <div class="body">
+        <xsl:copy-of select="$content" />
+      </div>
       <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>

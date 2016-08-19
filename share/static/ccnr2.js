@@ -63,6 +63,15 @@
       _this._i(page, procedure);
       return _this;
     },
+    // (E)rror
+    e: function (message) {
+      $('.body').append(
+        '<div class="error"><div class="mask"></div><table><tr><td>:-(</td><td>' +
+        '<h3>' + message + '</h3>' +
+        '<h4>请<a href="#" onclick="location.reload();return 0">刷新页面</a>以尝试解决这个问题。</h4>' +
+        '</td></tr></table></div>'
+      );
+    },
     // (R)e-invoke handlers
     _r: function (_this) {
       _this = this;
@@ -111,6 +120,8 @@
     _this._t = $_xml = $(data);
     document.title = $_xml.find('Title').text() + ' ' + document.title; // ADD the novel title to the page title
     done();
+  }).fail(function () {
+    _this.e('章节列表数据读取失败');
   });
 })
 
