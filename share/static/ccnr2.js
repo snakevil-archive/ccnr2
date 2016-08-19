@@ -63,6 +63,10 @@
       _this._i(page, procedure);
       return _this;
     },
+    // (O)ops handler
+    o: function () {
+      return false;
+    },
     // (E)rror
     e: function (message) {
       $('.body').append(
@@ -80,23 +84,33 @@
       });
     },
     // (R)estore previous state
-    r: function (state, $_toc, _html) {
+    r: function (state, _this, $_toc, _html, $_a, _value) {
       if ($('h2').text() == state.t) return;
       document.title = state.n + ' ' + state.t + ' | CCNR v2';
-      $_toc = this._t.find('Chapter');
+      _this = this;
+      $_toc = _this._t.find('Chapter');
       _html = '<h2>' + state.t + '</h2>' +
         $.map(state.p, function (text) {
           return '<p>' + text + '</p>';
         }).join('') +
         '<footer><nav><ul>' +
         '<li><a href="' + state['-'] + '"';
-      if ('#' != state['-']) _html += ' title="《' + $($_toc.get(state['-'] - 1)).text() + '》"';
-      _html += '><span class="iconfont icon-prev"></span></a></li>' +
-        '<li><a href="." title="章节目录"><span class="iconfont icon-list"></span></a></li>' +
-        '<li><a href="' + state['+'] + '"';
-      if ('#' != state['+']) _html += ' title="《' + $($_toc.get(state['+'] - 1)).text() + '》"';
-      _html += '><span class="iconfont icon-next"></span></a></li>' +
-        '</ul></nav></footer>';
+      $_a = $('aside a:first');
+      _value = state['-'];
+      $_a.attr('href', _value);
+      if ('#' == _value) {
+        $_a.removeAttr('title')
+          .click(_this.o);
+      } else $_a.attr('title', '《' + $($_toc.get(_value - 1)).text() + '》')
+        .off('click', _this.o);
+      $_a = $('aside a:last');
+      _value = state['+'];
+      $_a.attr('href', _value);
+      if ('#' == _value) {
+        $_a.removeAttr('title')
+          .click(_this.o);
+      } else $_a.attr('title', '《' + $($_toc.get(_value - 1)).text() + '》')
+        .off('click', _this.o);
       $('article').html(_html);
       this.w = 0;
       this._r();
@@ -131,12 +145,12 @@
   _this = this;
   _id = location.pathname.split('/').pop() - 0;
   $_chapters = _this._t.find('Chapter');
-  $_a = $('footer nav a:first'); // ADD previous page link
+  $_a = $('aside a:first'); // ADD previous page link
   if (1 < _id) {
     $_a.attr('href', _id - 1)
       .attr('title', '《' + $($_chapters.get(_id - 2)).text() + '》');
-  }
-  $_a = $('footer nav a:last'); // ADD next page link
+  } else $_a.click(_this.o);
+  $_a = $('aside a:last'); // ADD next page link
   if (_id < $_chapters.length) {
     $_a.attr('href', _id + 1)
       .attr('title', '《' + $($_chapters.get(_id)).text() + '》');
@@ -144,8 +158,8 @@
     $_badge.text($_chapters.length - _id);
     if (!document.referrer)
       $_badge.removeClass('hidden');
-  }
-  $('footer').removeClass('hidden'); // SHOW the nav links
+  } else $_a.click(_this.o);
+  $('aside').removeClass('hidden'); // SHOW the nav links
   done();
 })
 
@@ -156,15 +170,7 @@
     _pos = $.inArray(event.which, [37, 13, 39]);
     if (-1 == _pos || event.which == _this.w) return;
     _this.w = event.which;
-    $('footer nav a:eq(' + _pos + ')').click();
-  });
-  done();
-})
-
-// AVOIDs links of illegal previous or next chapter
-.on('chapter', function ($, done) {
-  $('a[href="#"]').click(function () {
-    return false;
+    $('aside a:eq(' + _pos + ')').click();
   });
   done();
 })
@@ -182,8 +188,8 @@
     _state = {
       t: $('h2').text(),
       p: [],
-      '-': $('footer nav a:first').attr('href'),
-      '+': $('footer nav a:last').attr('href')
+      '-': $('aside a:first').attr('href'),
+      '+': $('aside a:last').attr('href')
     };
     _state.n = document.title.split(_state.t)[0].replace(/\s*$/, '');
     $('p').each(function (index, p) {
@@ -197,7 +203,7 @@
 // PREFETCHs the next chapter data
 .on('chapter', function ($, done, _this, $_a, _id) {
   _this = this;
-  $_a = $('footer nav a:last');
+  $_a = $('aside a:last');
   _id = $_a.attr('href');
   if (!_this.s || '#' == _id) return done();
   _id -= 0;
@@ -225,7 +231,7 @@
 
 // CHANGEs history state instead of page
 .on('chapter', function ($, done, $_a, _this) {
-  $_a = $('footer nav a:last[href!="#"]');
+  $_a = $('aside a:last[href!="#"]');
   _this = this;
   if (!_this.s) return done();
   $_a.click(function (_state) {

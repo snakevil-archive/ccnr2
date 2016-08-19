@@ -27,29 +27,29 @@
             <xsl:value-of select="/Chapter/@toc" />
           </xsl:attribute>
           <xsl:apply-templates />
-          <footer class="hidden">
-            <nav>
-              <ul>
-                <li>
-                  <a href="#">
-                    <span class="iconfont icon-prev"></span>
-                  </a>
-                </li>
-                <li>
-                  <a href="." title="章节目录">
-                    <span class="iconfont icon-list"></span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <span class="iconfont icon-next"></span>
-                    <span class="hidden badge">0</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </footer>
         </article>
+        <aside class="hidden">
+          <nav>
+            <ul>
+              <li>
+                <a href="#">
+                  <span class="iconfont icon-prev"></span>
+                </a>
+              </li>
+              <li>
+                <a href="." title="目录">
+                  <span class="iconfont icon-list"></span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="iconfont icon-next"></span>
+                  <span class="hidden badge">0</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
