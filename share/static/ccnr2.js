@@ -80,20 +80,21 @@
       });
     },
     // (R)estore previous state
-    r: function (state, _html) {
+    r: function (state, $_toc, _html) {
       if ($('h2').text() == state.t) return;
       document.title = state.n + ' ' + state.t + ' | CCNR v2';
+      $_toc = this._t.find('Chapter');
       _html = '<h2>' + state.t + '</h2>' +
         $.map(state.p, function (text) {
           return '<p>' + text + '</p>';
         }).join('') +
         '<footer><nav><ul>' +
         '<li><a href="' + state['-'] + '"';
-      if ('#' != state['-']) _html += ' title="前一章"';
+      if ('#' != state['-']) _html += ' title="《' + $($_toc.get(state['-'] - 1)).text() + '》"';
       _html += '><span class="iconfont icon-prev"></span></a></li>' +
         '<li><a href="." title="章节目录"><span class="iconfont icon-list"></span></a></li>' +
         '<li><a href="' + state['+'] + '"';
-      if ('#' != state['+']) _html += ' title="后一章"';
+      if ('#' != state['+']) _html += ' title="《' + $($_toc.get(state['+'] - 1)).text() + '》"';
       _html += '><span class="iconfont icon-next"></span></a></li>' +
         '</ul></nav></footer>';
       $('article').html(_html);
@@ -138,7 +139,7 @@
   $_a = $('footer nav a:last'); // ADD next page link
   if (_id < $_chapters.length) {
     $_a.attr('href', _id + 1)
-      .attr('title', '《' + $($_chapters.get(_id + 1)).text() + '》');
+      .attr('title', '《' + $($_chapters.get(_id)).text() + '》');
     $_badge = $_a.children('.badge');
     $_badge.text($_chapters.length - _id);
     if (!document.referrer)
