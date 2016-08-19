@@ -32,6 +32,11 @@
     </head>
     <body>
       <section>
+        <div class="github">
+          <a href="https://github.com/snakevil/ccnr2" target="_blank">
+            <img src="//s.szen.in/n/github.png" alt="Fork me on GitHub" />
+          </a>
+        </div>
         <xsl:copy-of select="$content" />
       </section>
       <footer>
