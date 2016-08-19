@@ -2,6 +2,7 @@ html {
     font: 20px/1 "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif;
     color: $color;
     background-color: $color_bg;
+    -webkit-tap-highlight-color: transparent;
 }
 
 h1, h2, h3, h4, th, dt {
