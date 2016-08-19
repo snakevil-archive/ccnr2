@@ -1,0 +1,181 @@
+/*                                                                    common  */
+
+section,
+footer address {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 0 .5rem;
+    @include border-box;
+}
+
+footer {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    address {
+        font-size: .6rem;
+        padding: .7rem .5rem;
+        text-align: right;
+    }
+}
+
+li {
+    position: relative;
+    display: inline-block;
+    min-height: 1px;
+    @include border-box;
+}
+
+aside {
+    position: fixed;
+    z-index: 11;
+    bottom: 0;
+    margin-left: -.5rem;
+}
+
+ul a {
+    padding: .5rem .75rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/*                                                                       toc  */
+
+header {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 1.5rem;
+
+    &:before {
+        content: '《';
+    }
+
+    &:after {
+        content: '》';
+    }
+
+    .scrolled & {
+        margin: .5rem 0;
+        font-size: 1rem;
+    }
+
+    & + address {
+        margin: .75rem 0;
+    }
+}
+
+.scrolled header address {
+    display: none;
+}
+
+ol {
+    margin: 0 -.5rem;
+    padding: 7rem 0 3rem 0;
+
+    .scrolled & {
+        padding-top: 0;
+    }
+
+    li {
+        width: 50%;
+        padding-left: .5rem;
+        padding-right: .5rem;
+    }
+
+    a {
+        padding: .5rem 0;
+    }
+}
+
+/*                                                                   chapter  */
+
+article {
+    padding: 1.5rem 0 3rem 0;
+}
+
+h2 {
+    text-align: center;
+    position: fixed;
+    left: 0;
+    top: -.25rem;
+    right: 0;
+    z-index: 0;
+}
+
+p {
+    line-height: 1.75;
+    margin: 1rem 0;
+    text-indent: 2rem;
+}
+
+.badge {
+    position: absolute;
+    font-size: .5rem;
+    top: -.25rem;
+    padding: .25rem .5rem;
+}
+
+.error {
+    position: fixed;
+    z-index: 9;
+    top: -100%;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+
+    ._ {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+dl {
+    position: absolute;
+    padding: 1rem;
+    @include border-box;
+
+    a {
+        display: inline;
+        margin: 0 .25rem;
+    }
+}
+
+dt {
+    float: left;
+    margin: 0 1rem 1rem 0;
+    font-size: 2rem;
+}
+
+dd:last-child {
+    font-size: .8rem;
+    margin-top: .7rem;
+}
+
+/*                                                                responsive  */
+
+@media screen and (max-width: 639px) {
+    ol li {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 519px) {
+    .error .m {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}

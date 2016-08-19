@@ -32,18 +32,23 @@
           <nav>
             <ul>
               <li>
-                <a href="#">
-                  <span class="iconfont icon-prev"></span>
+                <a class="disabled" href="#" title="回到页首">
+                  <span class="ico ico-notop"></span>
+                </a>
+              </li>
+              <li>
+                <a class="disabled" href="#">
+                  <span class="ico ico-left"></span>
                 </a>
               </li>
               <li>
                 <a href="." title="目录">
-                  <span class="iconfont icon-list"></span>
+                  <span class="ico ico-toc"></span>
                 </a>
               </li>
               <li>
-                <a href="#">
-                  <span class="iconfont icon-next"></span>
+                <a class="disabled" href="#">
+                  <span class="ico ico-right"></span>
                   <span class="hidden badge">0</span>
                 </a>
               </li>

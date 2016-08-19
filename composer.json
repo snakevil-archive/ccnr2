@@ -37,7 +37,7 @@
         "bin-dir": "bin"
     },
     "scripts": {
-        "css": "uglify -s share/static/ccnr2.css -o share/static/ccnr2.min.css -c",
+        "css": "sass -t compressed share/scss/main.scss:share/static/ccnr2.min.css",
         "js": "uglify -s share/static/ccnr2.js -o share/static/ccnr2.min.js"
     }
 }

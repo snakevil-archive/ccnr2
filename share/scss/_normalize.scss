@@ -1,0 +1,39 @@
+html {
+    font: 20px/1 "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", Arial, sans-serif;
+    color: $color;
+    background-color: $color_bg;
+}
+
+h1, h2, h3, h4, th, dt {
+    font-weight: 400;
+    margin: 0;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+ol, ul, li, dl, dd, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: $color;
+    display: block;
+}
+
+address {
+    font-style: normal;
+
+    footer & {
+        font-family: "Space Mono", Courier, monospace;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, a, address {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

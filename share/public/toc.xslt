@@ -18,24 +18,31 @@
       <xsl:with-param name="title" select="Title" />
       <xsl:with-param name="author" select="Author" />
       <xsl:with-param name="content">
-        <section>
-          <header>
-            <xsl:apply-templates select="Title" />
-            <xsl:apply-templates select="Author" />
-          </header>
+        <header>
+          <xsl:apply-templates select="Title" />
+          <xsl:apply-templates select="Author" />
+        </header>
+        <nav>
+          <xsl:apply-templates select="Chapters" />
+        </nav>
+        <aside class="hidden">
           <nav>
-            <xsl:apply-templates select="Chapters" />
+            <ul>
+              <li>
+                <a class="disabled" href="#" title="回到页首">
+                  <span class="ico ico-notop"></span>
+                </a>
+              </li>
+            </ul>
           </nav>
-        </section>
+        </aside>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
   <xsl:template match="/Novel/Title">
     <h1>
-      <xsl:text><![CDATA[《]]></xsl:text>
       <xsl:value-of select="." />
-      <xsl:text><![CDATA[》]]></xsl:text>
     </h1>
   </xsl:template>
 

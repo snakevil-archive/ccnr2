@@ -1,0 +1,85 @@
+/*                                                                    common  */
+
+$color_border: darken($color_bg, 12.5%) !default;
+$color_disabled: darken($color_bg, 25%) !default;
+
+section {
+    background-color: $color_hi;
+    @include box-shadow(0 0 .5rem $color_border);
+}
+
+footer {
+    background-color: $color_bg;
+    border-top: 1px solid $color_border;
+
+    address {
+        color: $color_disabled;
+    }
+}
+
+ul a {
+    cursor: default;
+
+    &:hover {
+        color: $color_bg;
+        background-color: $color;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        color: $color_disabled;
+        background-color: transparent;
+    }
+}
+
+/*                                                                       toc  */
+
+header {
+    background-color: $color;
+    color: $color_bg;
+}
+
+ol a {
+    &:visited {
+        color: lighten($color, 25%);
+    }
+
+    &:hover {
+        color: darken($color_hi, 50%);
+    }
+}
+
+/*                                                                   chapter  */
+
+h2 {
+    color: lighten($color, 50%);
+}
+
+.badge {
+    color: $color_bg;
+    background-color: #f00;
+    @include border-radius(.5rem);
+}
+
+.prefetched, .prefetched:hover, dl a {
+    color: darken($color_hi, 50%);
+}
+
+.error ._ {
+    background-color: $color;
+    opacity: .6;
+}
+
+dl {
+    background-color: $color_bg;
+    border: 1px solid $color_border;
+    @include border-radius(.5rem);
+}
+
+/*                                                                responsive  */
+
+@media screen and (max-width: 768px) {
+    section {
+        @include box-shadow(0);
+    }
+}

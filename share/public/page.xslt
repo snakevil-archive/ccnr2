@@ -27,12 +27,16 @@
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
-      <link rel="stylesheet" href="//s.szen.in/n/ccnr2.min.css" />
+      <link href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css" rel="stylesheet" />
+      <link href="//s.szen.in/n/ccnr2.min.css" rel="stylesheet" />
     </head>
     <body>
-      <div class="body">
+      <section>
         <xsl:copy-of select="$content" />
-      </div>
+      </section>
+      <footer>
+        <address>by CCNRv2</address>
+      </footer>
       <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>
