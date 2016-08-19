@@ -31,7 +31,7 @@ class Toc extends ZenView\View
     protected function onRender($params)
     {
         return str_replace('<Novel>',
-            "<?xml-stylesheet type=\"text/xsl\" href=\"/n/_/toc.xslt\"?>\n<Novel>",
+            "<?xml-stylesheet type=\"text/xsl\" href=\"../toc.xslt\"?>\n<Novel>",
             file_get_contents("var/db/${params[novel]}/toc.xml")
         );
     }

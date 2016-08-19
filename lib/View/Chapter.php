@@ -33,7 +33,7 @@ class Chapter extends ZenView\View
         list($s_novel, $s_id) = explode('#', $params['chapter']);
 
         return str_replace('<Chapter ',
-            "<?xml-stylesheet type=\"text/xsl\" href=\"/n/_/chapter.xslt\"?>\n<Chapter toc=\"/n/$s_novel/\" ",
+            "<?xml-stylesheet type=\"text/xsl\" href=\"../chapter.xslt\"?>\n<Chapter toc=\"/n/$s_novel/\" ",
             file_get_contents("var/db/$s_novel/$s_id.xml")
         );
     }

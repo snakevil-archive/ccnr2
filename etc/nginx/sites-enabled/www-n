@@ -4,21 +4,20 @@ location ~ ^/n/([^/]+)(/\d+)$ {
     try_files /n/.db/$1$2.xml @php-ccnr2;
     sub_filter_types text/xml;
     sub_filter_last_modified on;
-    sub_filter '<Chapter ' '<?xml-stylesheet type="text/xsl" href="/n/_/chapter.xslt"?>\n<Chapter toc="/n/$1/" ';
+    sub_filter '<Chapter ' '<?xml-stylesheet type="text/xsl" href="../chapter.xslt"?>\n<Chapter toc="/n/$1/" ';
 }
 
 location ~ ^/n(/[^/]+/)$ {
     try_files /n/.db$1/toc.xml @php-ccnr2;
     sub_filter_types text/xml;
     sub_filter_last_modified on;
-    sub_filter '<Novel>' '<?xml-stylesheet type="text/xsl" href="/n/_/toc.xslt"?>\n<Novel>';
+    sub_filter '<Novel>' '<?xml-stylesheet type="text/xsl" href="../toc.xslt"?>\n<Novel>';
 }
 
 location ~ ^/n(/[^/]+)$ {
     if (-d $document_root/n/.db$1) {
         return 301 /n$1/;
     }
-    return 404;
 }
 
 location /n/ {

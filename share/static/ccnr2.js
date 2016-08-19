@@ -92,9 +92,7 @@
       _html = '<h2>' + state.t + '</h2>' +
         $.map(state.p, function (text) {
           return '<p>' + text + '</p>';
-        }).join('') +
-        '<footer><nav><ul>' +
-        '<li><a href="' + state['-'] + '"';
+        }).join('');
       $_a = $('aside a:first');
       _value = state['-'];
       $_a.attr('href', _value);
