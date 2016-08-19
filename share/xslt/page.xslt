@@ -5,7 +5,6 @@
     <xsl:param name="title" />
     <xsl:param name="author" />
     <xsl:param name="content" />
-    <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
     <html lang="zh-CN">
       <xsl:attribute name="class">
         <xsl:text>page-</xsl:text>
