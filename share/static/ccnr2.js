@@ -99,60 +99,64 @@
             });
         },
         // (R)estore previous state
-        r: function (state, _this, $_toc, _html, $_a, _value) {
+        r: function (state, _this, _sa, _sh, _st, _sc, $_toc, _html, $_a, _value) {
             if ($('h2').text() == state.t) return;
             document.title = state.n + ' ' + state.t + ' | CCNR v2';
             _this = this;
+            _sa = 'aside a:';
+            _sh = 'href';
+            _st = 'title';
+            _sc = 'click';
             $_toc = _this._t.find('Chapter');
             _html = '<h2>' + state.t + '</h2>' +
                 $.map(state.p, function (text) {
                     return '<p>' + text + '</p>';
                 }).join('');
-            $_a = $('aside a:first');
+            $_a = $(_sa + 'eq(1)');
             _value = state['-'];
-            $_a.attr('href', _value);
+            $_a.attr(_sh, _value);
             if ('#' == _value) {
-                $_a.removeAttr('title')
+                $_a.removeAttr(_st)
                     .click(_this.o);
-            } else $_a.attr('title', '《' + $($_toc.get(_value - 1)).text() + '》')
-                .off('click', _this.o);
-            $_a = $('aside a:last');
+            } else $_a.attr(_st, '《' + $($_toc.get(_value - 1)).text() + '》')
+                .off(_sc, _this.o);
+            $_a = $(_sa + 'last');
             _value = state['+'];
-            $_a.attr('href', _value);
+            $_a.attr(_sh, _value);
             if ('#' == _value) {
-                $_a.removeAttr('title')
+                $_a.removeAttr(_st)
                     .click(_this.o);
-            } else $_a.attr('title', '《' + $($_toc.get(_value - 1)).text() + '》')
-                .off('click', _this.o);
+            } else $_a.attr(_st, '《' + $($_toc.get(_value - 1)).text() + '》')
+                .off(_sc, _this.o);
             $('article').html(_html);
-            this.w = 0;
-            this._r();
+            _this.w = 0;
+            _this._r();
         }
     };
 }(jQuery))
 
 // TOGGLEs novel title on scrolling
-.once(function ($, done, $_body, $_top, _s, _d, _c, _t, _n) {
+.once(function ($, done, $_body, $_top, _ss, _sd, _sc, _st, _sn) {
     $_body = $(document.body);
     $_top = $('aside a:first');
-    _s = 'scrolled';
-    _d = 'disabled';
-    _c = 'span';
-    _t = 'ico-top';
-    _n = 'ico-notop';
+    _ss = 'scrolled';
+    _sd = 'disabled';
+    _sc = 'span';
+    _st = 'ico-top';
+    _sn = 'ico-notop';
     $(window).scroll(function () {
         if (0 < window.scrollY) {
-            $_body.addClass(_s);
-            $_top.removeClass(_d)
-                .children(_c)
-                .addClass(_t)
-                .removeClass(_n);
+            $_body.addClass(_ss);
+            $_top.removeClass(_sd)
+                .children(_sc)
+                .addClass(_st)
+                .removeClass(_sn);
         } else {
-            $_body.removeClass(_s);
-            $_top.addClass(_d)
-                .children(_c)
-                .addClass(_n)
-                .removeClass(_t);
+            $_body.removeClass(_ss);
+            $_top.addClass(_sd)
+                .children(_sc)
+                .addClass(_sn)
+                .removeClass(_st);
         }
     });
     done();
@@ -171,32 +175,40 @@
 })
 
 // SHOWs TOC links
-.once('chapter', function ($, done, _this, _id, $_chapters, $_a, $_badge) {
+.once('chapter', function ($, done, _this, _sa, _sh, _sd, _st, _id, $_chapters, $_a, $_badge) {
     _this = this;
+    _sa = 'aside a:';
+    _sh = 'href';
+    _st = 'title';
+    _sd = 'disabled';
     _id = location.pathname.split('/').pop() - 0;
     $_chapters = _this._t.find('Chapter');
-    $_a = $('aside a:eq(1)'); // ADD previous page link
+    $_a = $(_sa + 'eq(1)'); // ADD previous page link
     if (1 < _id) {
-        $_a.attr('href', _id - 1)
-            .attr('title', '《' + $($_chapters.get(_id - 2)).text() + '》')
-            .removeClass('disabled');
+        $_a.attr(_sh, _id - 1)
+            .attr(_st, '《' + $($_chapters.get(_id - 2)).text() + '》')
+            .removeClass(_sd);
     } else {
-        $_a.addClass('disabled')
+        $_a.addClass(_sd)
             .click(_this.o);
     }
-    $_a = $('aside a:last'); // ADD next page link
+    $_a = $(_sa + 'last'); // ADD next page link
     if (_id < $_chapters.length) {
-        $_a.attr('href', _id + 1)
-            .attr('title', '《' + $($_chapters.get(_id)).text() + '》')
-            .removeClass('disabled');
+        $_a.attr(_sh, _id + 1)
+            .attr(_st, '《' + $($_chapters.get(_id)).text() + '》')
+            .removeClass(_sd);
         $_badge = $_a.children('.badge');
         $_badge.text($_chapters.length - _id);
         if (!document.referrer)
             $_badge.removeClass('hidden');
     } else {
-        $_a.addClass('disabled')
+        $_a.addClass(_sd)
             .click(_this.o);
     }
+    done();
+})
+
+.on(function ($, done) {
     $('aside').removeClass('hidden'); // SHOW the nav links
     done();
 })
@@ -222,12 +234,14 @@
     $(window).on('popstate', function (ev) {
         if (history.state) _this.r(history.state);
     });
-    $(document).ready(function (_state) {
+    $(document).ready(function (_state, _sa, _sh) {
+        _sa = 'aside a:';
+        _sh = 'href';
         _state = {
             t: $('h2').text(),
             p: [],
-            '-': $('aside a:eq(1)').attr('href'),
-            '+': $('aside a:last').attr('href')
+            '-': $(_sa + 'eq(1)').attr(_sh),
+            '+': $(_sa + 'last').attr(_sh)
         };
         _state.n = document.title.split(_state.t)[0].replace(/\s*$/, '');
         $('p').each(function (index, p) {
