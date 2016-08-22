@@ -1,74 +1,70 @@
 'use strict';
-(function ($) {
+(function ($, _procedures, _chain, _call) {
+    // 动态功能池。
+    _procedures = [],
+    // 链式对象。
+    _chain = $.Deferred().resolve(),
+    // 执行功能。
+    _call = function (_, page, procedure, _current, _done) {
+        _current = $.Deferred(),
+        _done = function () {
+            _current.resolve();
+        };
+        _chain.done(function () {
+            switch (typeof page) {
+                case 'function':
+                    procedure = page;
+                    page = true;
+                    break;
+                case 'string':
+                    page = page == '*' || page == _.p;
+                    break;
+                case 'object':
+                    page = -1 != $.inArray(_.p, page);
+                    break;
+                default:
+                    page = false;
+            }
+            if (!page)
+                return _done();
+            procedure.call(_, $, _done);
+        });
+        _chain = _current;
+    };
     return {
-        // (P)age type
+        d: document,
+        l: location,
+        h: history,
+
+        // 页面类型。
         p: (function (_page) {
             $.each($('html').attr('class').split(/\s+/), function (index, value) {
-                if (_page) return;
+                if (_page)
+                    return;
                 value = value.split('-');
-                if ('page' != value[0] || !value[1]) return;
+                if ('page' != value[0] || !value[1])
+                    return;
                 _page = value[1];
             });
             return _page || 'unknown';
         }()),
-        // (S)tatable
-        s: 'pushState' in history,
-        // (W)hich key code
-        w: 0,
-        // handlers (O)n different pages
-        _o: [],
-        // (D)eferred object for register queue
-        _d: $.Deferred().resolve(),
-        // (T)OC xml data
-        _t: 0,
-        // pre(F)etched next chapter
-        // handler (I)nvoker
-        _i: function (page, procedure, _this, _defer1) {
-            _this = this;
-            _defer1 = $.Deferred();
-            _this._d.done(function (_defer2) {
-                _defer2 = new $.Deferred();
-                _defer2.done(function () {
-                    _defer1.resolve();
-                });
-                switch (typeof page) {
-                    case 'function':
-                        procedure = page;
-                        page = true;
-                        break;
-                    case 'string':
-                        page = page == '*' || page == _this.p;
-                        break;
-                    case 'object':
-                        page = -1 != $.inArray(_this.p, page);
-                        break;
-                    default:
-                        page = false;
-                }
-                if (!page) return _defer2.resolve();
-                procedure.call(_this, $, _defer2.resolve);
-            });
-            _this._d = _defer1;
-        },
-        // register a repeatable handler for page states in variant pages
+
+        // 注册动态功能。
         on: function (page, procedure, _this) {
             _this = this;
-            _this._o.push([page, procedure]);
-            _this._i(page, procedure);
+            _procedures.push([page, procedure]);
+            _call(_this, page, procedure);
             return _this;
         },
-        // register an once handler in variant pages
+        // 注册静态功能。
         once: function (page, procedure, _this) {
             _this = this;
-            _this._i(page, procedure);
+            _call(_this, page, procedure);
             return _this;
         },
-        // (O)ops handler
-        o: function () {
-            return false;
-        },
-        // (E)rror
-        e: function (message, $_error, $_panel, _size, _ww, _pw) {
+
+        // 错误警告
+        e: function (message, _floor, _height, $_error, $_panel, _width, _size) {
             $('body').append(
                 '<div class="error"><div class="_"></div>' +
                 '<dl><dt><span class="ico ico-sad"></span></dt>' +
@@ -76,231 +72,231 @@
                 '<dd>请<a href="#" onclick="location.reload();return 0">刷新页面</a>以尝试解决这个问题。</dd>' +
                 '</dl></div>'
             );
-            $_error = $('.error');
-            $_panel = $_error.children('dl');
-            _size = 40;
-            _ww = $_error.width();
-            _pw = Math.min(480, _ww - _size);
+            _floor = 'floor',
+            _height = 'height',
+            $_error = $('.error'),
+            $_page = $_error.children('dl'),
+            _width = $_error._width();
+            _size = Math.min(480, _width - 40);
             $_panel.css({
-                width: _pw,
-                left: Math.floor((_ww - _pw) / 2)
+                width: _size,
+                left: Math[_floor]((_width - _size) / 2)
             });
-            $_panel.css('top', Math.floor(($_error.height() - $_panel.height() - _size) / 2));
+            $_panel.css('top', Math[_floor](($_error[_height]() - $_panel[_height]() - 40) / 2));
             $_error.css({
                 top: 0,
                 left: 0
             });
         },
-        // (R)e-invoke handlers
-        _r: function (_this) {
-            _this = this;
-            $.each(_this._o, function (index, hook) {
-                _this._i(hook[0], hook[1]);
-            });
+
+        // 抑制默认行为的空的事件处理器
+        o: function () {
+            return false;
         },
-        // (R)estore previous state
-        r: function (state, _this, _sa, _sh, _st, _sc, $_toc, _html, $_a, _value) {
-            if ($('h2').text() == state.t) return;
-            document.title = state.n + ' ' + state.t + ' | CCNR v2';
+
+        // 章节列表数据
+        t: false,
+
+        // 按键值记录
+        w: -1,
+
+        // 还原历史状态
+        r: function (state, _this, _text) {
             _this = this;
-            _sa = 'aside a:';
-            _sh = 'href';
-            _st = 'title';
-            _sc = 'click';
-            $_toc = _this._t.find('Chapter');
-            _html = '<h2>' + state.t + '</h2>' +
-                $.map(state.p, function (text) {
-                    return '<p>' + text + '</p>';
-                }).join('');
-            $_a = $(_sa + 'eq(1)');
-            _value = state['-'];
-            $_a.attr(_sh, _value);
-            if ('#' == _value) {
-                $_a.removeAttr(_st)
-                    .click(_this.o);
-            } else $_a.attr(_st, '《' + $($_toc.get(_value - 1)).text() + '》')
-                .off(_sc, _this.o);
-            $_a = $(_sa + 'last');
-            _value = state['+'];
-            $_a.attr(_sh, _value);
-            if ('#' == _value) {
-                $_a.removeAttr(_st)
-                    .click(_this.o);
-            } else $_a.attr(_st, '《' + $($_toc.get(_value - 1)).text() + '》')
-                .off(_sc, _this.o);
-            $('article').html(_html);
-            _this.w = 0;
-            _this._r();
+            if ($('h2').text() == state[1]) return;
+            _this.d.title = state[0] + ' ' + state[1] + ' | CCNR v2';
+            $('.badge').addClass('hidden');
+            $('article').html(
+                '<h2>' + state[1] + '</h2>' +
+                $.map(state[2], function (p) {
+                    return '<p>' + p + '</p>';
+                }).join('')
+            );
+            _this.w = -1;
+            $.each(_procedures, function (index, procedure) {
+                _call(_this, procedure[0], procedure[1]);
+            });
         }
     };
 }(jQuery))
 
-// TOGGLEs novel title on scrolling
-.once(function ($, done, $_body, $_top, _ss, _sd, _sc, _st, _sn) {
-    $_body = $(document.body);
-    $_top = $('aside a:first');
-    _ss = 'scrolled';
-    _sd = 'disabled';
-    _sc = 'span';
-    _st = 'ico-top';
-    _sn = 'ico-notop';
-    $_top.click(function () {
-        if (!$_top.hasClass(_sd)) $('html, body').animate({ scrollTop: 0}, 250);
+// 赋予「返回页首」按钮功能（检测页面是否发生滚屏）
+.once(function ($, done, _scrolled, _disabled, _span, _top, _notop, _hasClass, _addClass, _removeClass, _children, $_body, $_html, $_top) {
+    _scrolled = 'scrolled',
+    _disabled = 'disabled',
+    _span = 'span',
+    _top = 'ico-top',
+    _notop = 'ico-notop',
+    _hasClass = 'hasClass',
+    _addClass = 'addClass',
+    _removeClass = 'removeClass',
+    _children = 'children',
+    $_body = $('body'),
+    $_html = $_body.parent(),
+    $_top = $('aside a:first').click(function () {
+        if ($_html[_hasClass](_scrolled)) $_body.animate({ scrollTop: 0}, 250);
         return false;
     });
     $(window).scroll(function () {
-        if (0 < window.scrollY) {
-            $_body.addClass(_ss);
-            $_top.removeClass(_sd)
-                .children(_sc)
-                .addClass(_st)
-                .removeClass(_sn);
+        if (0 < $_body.scrollTop()) {
+            $_html[_addClass](_scrolled);
+            $_top[_removeClass](_disabled)
+                [_children](_span)
+                [_addClass](_top)
+                [_removeClass](_notop);
         } else {
-            $_body.removeClass(_ss);
-            $_top.addClass(_sd)
-                .children(_sc)
-                .addClass(_sn)
-                .removeClass(_st);
+            $_html[_removeClass](_scrolled);
+            $_top[_addClass](_disabled)
+                [_children](_span)
+                [_addClass](_notop)
+                [_removeClass](_top);
         }
     });
     done();
 })
 
-// FETCHes TOC xml data
+// 读取章节列表数据
 .once('chapter', function ($, done, _this) {
     _this = this;
-    $.get($('article').data('toc')).done(function (data, $_xml) {
-        _this._t = $_xml = $(data);
-        document.title = $_xml.find('Title').text() + ' ' + document.title; // ADD the novel title to the page title
+    $.get($('article').data('toc')).done(function (xml, _document, _title, $_xml) {
+        _document = _this.d,
+        _title = 'title',
+        _this.t = $_xml = $(xml);
+        _document[_title] = $_xml.find('Title').text() + ' '+ _document[_title];
         done();
     }).fail(function () {
-        _this.e('章节列表数据读取失败');
+        _this.e('章节列表数据读取失败。');
     });
 })
 
-// SHOWs TOC links
-.on('chapter', function ($, done, _this, _sa, _sh, _sd, _st, _id, $_chapters, $_a, $_badge) {
-    _this = this;
-    _sa = 'aside a:';
-    _sh = 'href';
-    _st = 'title';
-    _sd = 'disabled';
-    _id = location.pathname.split('/').pop() - 0;
-    $_chapters = _this._t.find('Chapter');
-    $_a = $(_sa + 'eq(1)'); // ADD previous page link
-    if (1 < _id) {
-        $_a.attr(_sh, _id - 1)
-            .attr(_st, '《' + $($_chapters.get(_id - 2)).text() + '》')
-            .removeClass(_sd);
-    } else {
-        $_a.addClass(_sd)
-            .click(_this.o);
-    }
-    $_a = $(_sa + 'last'); // ADD next page link
-    $_a.removeClass('prefetched');
-    if (_id < $_chapters.length) {
-        $_a.attr(_sh, _id + 1)
-            .attr(_st, '《' + $($_chapters.get(_id)).text() + '》')
-            .removeClass(_sd);
-        $_badge = $_a.children('.badge');
-        $_badge.text($_chapters.length - _id);
-        if (!document.referrer)
-            $_badge.removeClass('hidden');
-    } else {
-        $_a.addClass(_sd)
-            .click(_this.o);
-    }
+// 修正底部导航面板中的前后章功能
+.on('chapter', function ($, done, _this, _a, _href, _title, _disabled, __, _left, _right, _none, _attr, _addClass, _removeClass, _click, _off, _eq, _text, _index, $_chapters, $_a, $_badge) {
+    _this = this,
+    _a = 'aside a:eq(',
+    _href = 'href',
+    _title = 'title',
+    _disabled = 'disabled',
+    __ = '#',
+    _left = '《',
+    _right = '》',
+    _none = '（无）',
+    _attr = 'attr',
+    _addClass = 'addClass',
+    _removeClass = 'removeClass',
+    _click = 'click',
+    _off = 'off',
+    _eq = 'eq',
+    _text = 'text',
+    _index = _this.l.pathname.split('/').pop() - 0,
+    $_chapters = _this.t.find('Chapter'),
+    $_a = $(_a + '1)');
+    if (1 < _index) {
+        $_a[_attr](_href, _index - 1)
+            [_attr](_title, _left + $_chapters[_eq](_index - 2)[_text]() + _right)
+            [_removeClass](_disabled)
+            [_off](_click, _this.o);
+    } else
+        $_a[_attr](_href, __)
+            [_attr](_title, _none)
+            [_addClass](_disabled)
+            [_click](_this.o);
+    $_a = $(_a + '3)');
+    if (_index < $_chapters.length) {
+        $_a[_attr](_href, _index + 1)
+            [_attr](_title, _left + $_chapters[_eq](_index)[_text]() + _right)
+            [_removeClass](_disabled)
+            [_off](_click, _this.o);
+        $_badge = $_a.children('.badge')
+            [_text]($_chapters.length - _index);
+        if (!_this.d.referer && !_this.h.state)
+            $_badge[_removeClass]('hidden');
+    } else
+        $_a[_attr](_href, __)
+            [_attr](_title, _none)
+            [_addClass](_disabled)
+            [_click](_this.o);
     done();
 })
 
-.on(function ($, done) {
-    $('aside').removeClass('hidden'); // SHOW the nav links
-    done();
-})
-
-// NAVIGATEs sibling chapter page on key press
-.once('chapter', function ($, done, _this) {
-    _this = this;
-    $(document).keydown(function (event, _pos) {
-        _pos = $.inArray(event.which, [37, 13, 39]);
-        if (-1 == _pos || event.which == _this.w) return;
-        _this.w = event.which;
-        $('aside a:eq(' + (1 + _pos) + ')').click();
-    });
-    done();
-})
-
-////////////////////////////////////////////////////////////// CHAPTER STATE ///
-
-// CONVERTs to history state
-.once('chapter', function ($, done, _this) {
-    _this = this;
-    if (!_this.s) return done();
-    $(window).on('popstate', function (ev) {
-        if (history.state) _this.r(history.state);
-    });
-    $(document).ready(function (_state, _sa, _sh) {
-        _sa = 'aside a:';
-        _sh = 'href';
-        _state = {
-            t: $('h2').text(),
-            p: [],
-            '-': $(_sa + 'eq(1)').attr(_sh),
-            '+': $(_sa + 'last').attr(_sh)
-        };
-        _state.n = document.title.split(_state.t)[0].replace(/\s*$/, '');
-        $('p').each(function (index, p) {
-            _state.p.push($(p).text());
-        });
-        history.replaceState(_state, '', location.href.replace(/^.*\//, ''));
-        done();
-    });
-})
-
-// PREFETCHs the next chapter data
-.on('chapter', function ($, done, _this, $_a, _id) {
-    _this = this;
-    $_a = $('aside a:last');
-    _id = $_a.attr('href');
-    if (!_this.s || '#' == _id) return done();
-    _id -= 0;
-    $.get(_id).done(function (data, $_xml, _state) {
-        $_xml = $(data);
-        _state = {
-            n: history.state.n,
-            t: $_xml.find('Title').text(),
-            p: [],
-            '-': '#',
-            '+': '#'
-        };
-        $_xml.find('Paragraph').each(function (index, p) {
-            _state.p.push($(p).text());
-        });
-        if (1 < _id)
-            _state['-'] = _id - 1;
-        if (_id < _this._t.find('Chapter').length)
-            _state['+'] = _id + 1;
-        $_a.attr('class', 'prefetched');
-        _this._f = _state;
+// 显示底部导航面板并添加按键监听
+.once(function ($, done, _this, _aside) {
+    _this = this,
+    _aside = 'aside';
+    $(_aside).removeClass('hidden');
+    $('body').keydown(function (event, _which, _index) {
+        _which = 'which',
+        _index = $.inArray(event[_which], [27, 37, 13, 39]);
+        if (0 > _index || _index == _this.w)
+            return;
+        if (_index)
+            _this.w = _index;
+        $(_aside + ' a:eq(' + _index + ')')[0].click();
     });
     done();
 })
 
-// CHANGEs history state instead of page
-.on('chapter', function ($, done, $_a, _this) {
-    $_a = $('aside a:last[href!="#"]');
-    _this = this;
-    if (!_this.s) return done();
-    $_a.click(function (_state) {
-        _state = _this._f;
-        if (!_state) return true;
-        history.pushState(_state, '', $_a.attr('href'));
+// 转化为历史状态
+.once('chapter', function ($, done, _this, _history, _state, _text, _replace, _data) {
+    _this = this,
+    _history = _this.h,
+    _state = 'state',
+    _text = 'text',
+    _replace = 'replace',
+    _data = [
+        $('h2')[_text](),
+        []
+    ];
+    if (!(_state in _history))
+        return done();
+    $(window).on('popstate', function (event) {
+        _this.r(_history[_state]);
+    });
+    _data.unshift(_this.d.title.split(_data[0])[0][_replace](/\s*$/, ''));
+    $('p').each(function (index, p) {
+        _data[2].push($(p)[_text]());
+    });
+    _history.replaceState(_data, '', _this.l.href[_replace](/^.*\//, ''));
+    done();
+})
+
+// 预加载并历史状态化下一章节
+.on('chapter', function ($, done, _this, _history, _state, _prefetched, _addClass, $_a, _index, $_html, _data, _handler) {
+    _this = this,
+    _history = _this.h,
+    _state = 'state',
+    _prefetched = 'prefetched',
+    _addClass = 'addClass',
+    $_a = $('aside a:last'),
+    _index = $_a.attr('href');
+    if (!_history[_state] || '#' == _index)
+        return done();
+    $_html = $('html');
+    _data = [
+        _history[_state][0],
+        '',
+        []
+    ];
+    $_a.one('click', function () {
+        if (!$_html.hasClass(_prefetched))
+            return true;
+        $_html.removeClass(_prefetched);
+        _history.pushState(_data, '', _index);
         window.scrollTo(0, 0);
-        _this.r(_state);
-        delete _this._f;
-        $('.badge').addClass('hidden');
+        _this.r(_data);
+        $('.badge')[_addClass]('hidden');
         return false;
     });
+    $.get(_index).done(function (xml, _find, _text, $_xml) {
+        _find = 'find',
+        _text = 'text',
+        $_xml = $(xml);
+        _data[1] = $_xml[_find]('Title')[_text]();
+        $_xml[_find]('Paragraph').each(function (index, p) {
+            _data[2].push($(p)[_text]());
+        });
+        $_html[_addClass](_prefetched);
+    });
     done();
 })
+
 ;

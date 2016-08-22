@@ -31,16 +31,17 @@
       <link href="//s.szen.in/n/ccnr2.min.css" rel="stylesheet" />
     </head>
     <body>
+      <header>
+        <a href="https://github.com/snakevil/ccnr2" target="_blank">
+          <img src="//s.szen.in/n/github.png" alt="Fork me on GitHub" />
+        </a>
+      </header>
       <section>
-        <div class="github">
-          <a href="https://github.com/snakevil/ccnr2" target="_blank">
-            <img src="//s.szen.in/n/github.png" alt="Fork me on GitHub" />
-          </a>
-        </div>
         <xsl:copy-of select="$content" />
       </section>
       <footer>
         <address>by CCNRv2</address>
+        <div class="progress"></div>
       </footer>
       <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js"></script>

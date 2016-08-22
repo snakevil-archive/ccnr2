@@ -22,7 +22,7 @@ footer {
     }
 }
 
-.github {
+body > header {
     position: absolute;
     z-index: 10;
     right: 0;
@@ -52,7 +52,7 @@ ul a {
 
 /*                                                                       toc  */
 
-header {
+section header {
     position: fixed;
     z-index: 2;
     left: 0;
@@ -109,7 +109,6 @@ h2 {
     left: 0;
     top: -.25rem;
     right: 0;
-    z-index: 0;
 }
 
 p {
@@ -179,7 +178,7 @@ dd:last-child {
 }
 
 @media screen and (max-width: 1023px) {
-    .github {
+    body > header {
         display: none;
     }
 }

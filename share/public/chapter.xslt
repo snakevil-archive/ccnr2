@@ -42,7 +42,7 @@
                 </a>
               </li>
               <li>
-                <a href="." title="目录">
+                <a href="." title="章节目录">
                   <span class="ico ico-toc"></span>
                 </a>
               </li>

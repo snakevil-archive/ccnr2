@@ -28,7 +28,7 @@ ul a {
 
 /*                                                                       toc  */
 
-header {
+section header {
     background-color: $color;
     color: $color_bg;
 }
@@ -55,7 +55,7 @@ h2 {
     @include border-radius(.5rem);
 }
 
-.prefetched, .prefetched:hover, dl a {
+.prefetched :last-child > a {
     color: darken($color_hi, 50%);
 }
 
