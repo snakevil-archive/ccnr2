@@ -15,3 +15,15 @@
     -moz-box-shadow: $shadow;
     box-shadow: $shadow;
 }
+
+@mixin transition($t) {
+    -webkit-transition: $t;
+    -moz-transition: $t;
+    transition: $t;
+}
+
+@mixin transition2($t1, $t2) {
+    -webkit-transition: $t1, $t2;
+    -moz-transition: $t1, $t2;
+    transition: $t1, $t2;
+}

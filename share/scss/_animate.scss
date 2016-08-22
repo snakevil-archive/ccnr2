@@ -1,0 +1,7 @@
+h1 {
+    @include transition2(margin .25s, font-size .25s);
+}
+
+a {
+    @include transition(color .25s);
+}
