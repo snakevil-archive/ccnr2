@@ -20,15 +20,9 @@ footer {
 ul a {
     cursor: default;
 
-    &:hover {
-        color: $color_bg;
-        background-color: $color;
-    }
-
     &.disabled {
         cursor: not-allowed;
         color: $color_disabled;
-        background-color: transparent;
     }
 }
 
