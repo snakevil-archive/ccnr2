@@ -28,14 +28,13 @@
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
       <link href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css" rel="stylesheet" />
+      <link href="//cdn.bootcss.com/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" rel="stylesheet" />
       <link href="//s.szen.in/n/ccnr2.min.css" rel="stylesheet" />
     </head>
     <body>
-      <header>
-        <a href="https://github.com/snakevil/ccnr2" target="_blank">
-          <img src="//s.szen.in/n/github.png" alt="Fork me on GitHub" />
-        </a>
-      </header>
+      <div>
+        <a class="github-fork-ribbon" href="https://github.com/snakevil/ccnr2" target="_blank" title="Fork me on GitHub"></a>
+      </div>
       <section>
         <xsl:copy-of select="$content" />
       </section>

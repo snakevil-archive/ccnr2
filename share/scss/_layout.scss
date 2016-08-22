@@ -22,12 +22,6 @@ footer {
     }
 }
 
-body > header {
-    position: absolute;
-    z-index: 10;
-    right: 0;
-}
-
 li {
     position: relative;
     display: inline-block;
@@ -52,7 +46,7 @@ ul a {
 
 /*                                                                       toc  */
 
-section header {
+header {
     position: fixed;
     z-index: 2;
     left: 0;
@@ -178,7 +172,7 @@ dd:last-child {
 }
 
 @media screen and (max-width: 1023px) {
-    body > header {
+    .github-fork-ribbon {
         display: none;
     }
 }

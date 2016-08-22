@@ -26,9 +26,13 @@ ul a {
     }
 }
 
+.github-fork-ribbon:before {
+    background-color: #f80;
+}
+
 /*                                                                       toc  */
 
-section header {
+header {
     background-color: $color;
     color: $color_bg;
 }
