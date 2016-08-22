@@ -144,6 +144,10 @@
     _sc = 'span';
     _st = 'ico-top';
     _sn = 'ico-notop';
+    $_top.click(function () {
+        if (!$_top.hasClass(_sd)) $('html, body').animate({ scrollTop: 0}, 250);
+        return false;
+    });
     $(window).scroll(function () {
         if (0 < window.scrollY) {
             $_body.addClass(_ss);
