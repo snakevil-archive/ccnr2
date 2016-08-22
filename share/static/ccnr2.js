@@ -175,7 +175,7 @@
 })
 
 // SHOWs TOC links
-.once('chapter', function ($, done, _this, _sa, _sh, _sd, _st, _id, $_chapters, $_a, $_badge) {
+.on('chapter', function ($, done, _this, _sa, _sh, _sd, _st, _id, $_chapters, $_a, $_badge) {
     _this = this;
     _sa = 'aside a:';
     _sh = 'href';
@@ -193,6 +193,7 @@
             .click(_this.o);
     }
     $_a = $(_sa + 'last'); // ADD next page link
+    $_a.removeClass('prefetched');
     if (_id < $_chapters.length) {
         $_a.attr(_sh, _id + 1)
             .attr(_st, '《' + $($_chapters.get(_id)).text() + '》')

@@ -38,6 +38,6 @@
     },
     "scripts": {
         "css": "sass -t compressed share/scss/main.scss:share/static/ccnr2.min.css",
-        "js": "uglify -s share/static/ccnr2.js -o share/static/ccnr2.min.js"
+        "js": "cd share/static; uglifyjs ccnr2.js -c -m -o ccnr2.min.js --source-map ccnr2.min.js.map"
     }
 }
