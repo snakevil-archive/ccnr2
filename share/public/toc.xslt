@@ -20,7 +20,6 @@
       <xsl:with-param name="content">
         <header>
           <xsl:apply-templates select="Title" />
-          <xsl:apply-templates select="Author" />
         </header>
         <nav>
           <xsl:apply-templates select="Chapters" />
@@ -44,12 +43,6 @@
     <h1>
       <xsl:value-of select="." />
     </h1>
-  </xsl:template>
-
-  <xsl:template match="/Novel/Author">
-    <address>
-      <xsl:value-of select="." />
-    </address>
   </xsl:template>
 
   <xsl:template match="/Novel/Chapters">
