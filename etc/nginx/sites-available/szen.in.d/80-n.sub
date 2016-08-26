@@ -1,0 +1,47 @@
+# -*- nginx -*-
+
+location ~ ^/n/([^/]+)(/\d+)$ {
+    try_files                   /n/.db/$1$2.xml @php-ccnr2;
+    sub_filter_types            text/xml;
+    sub_filter_last_modified    on;
+    sub_filter                  '<Chapter ' '<?xml-stylesheet type="text/xsl" href="../chapter.xslt"?>\n<Chapter toc="/n/$1/" ';
+    add_header                  X-Powered-By CCNRv2;
+}
+
+location ~ ^/n(/[^/]+/)$ {
+    try_files                   /n/.db$1/toc.xml @php-ccnr2;
+    sub_filter_types            text/xml;
+    sub_filter_last_modified    on;
+    sub_filter                  '<Novel>' '<?xml-stylesheet type="text/xsl" href="../toc.xslt"?>\n<Novel>';
+    add_header                  X-Powered-By CCNRv2;
+}
+
+location ~ ^/n(/[^/]+)$ {
+    add_header                  X-Powered-By CCNRv2;
+    if (-d $document_root/n/.db$1) {
+        return                  301 /n$1/;
+    }
+}
+
+location /n/ {
+    types {
+        text/xml                xslt;
+    }
+    try_files                   $uri @php-ccnr2;
+}
+
+location @php-ccnr2 {
+    internal;
+
+    rewrite                     '^(.*)$' /n/.cgi-bin/fcgi.php$1 break;
+
+    fastcgi_split_path_info     ^(.+\.php)(/.*)$;
+    fastcgi_pass                php;
+    include                     fastcgi_params;
+    fastcgi_param               SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param               PATH_INFO       $fastcgi_path_info;
+    fastcgi_param               PATH_TRANSLATED $document_root$fastcgi_script_name;
+    fastcgi_keep_conn           on;
+
+    add_header                  X-Powered-By CCNRv2;
+}

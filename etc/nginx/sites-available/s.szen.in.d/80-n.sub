@@ -13,6 +13,6 @@ location ~ ^/n/.+\.(css|js)$ {
 }
 
 location ~ ^/n/.+\.(jpe?g|png)$ {
-    expires     max;
-    add_header  X-Powered-By CCNRv2;
+    expires             max;
+    add_header          X-Powered-By CCNRv2;
 }

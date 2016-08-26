@@ -17,4 +17,5 @@ return array(
             '(?P<chapter>\d+)' => $NS.'ChapterRead',
         ),
     ),
+    '.*' => '@302:/n/',
 );
