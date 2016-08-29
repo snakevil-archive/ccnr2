@@ -62,7 +62,11 @@ class Chapter extends ccnr2\Component\Dao
             }
             $o_sxe = new SimpleXMLElement($p_toc, LIBXML_NOCDATA, true);
             $a_ret['ref'] = $o_sxe->xpath('/Novel/Chapters/Chapter[position()='.$s_chapter.']/@ref')[0];
-            $o_chapter = ccnr2\Utility\ChapterPage::parse(trim(file_get_contents($p_src)).$a_ret['ref']);
+            $s_uri = trim(file_get_contents($p_src));
+            if ('/' != substr($s_uri, -1)) {
+                $s_uri = dirname($s_uri).'/';
+            }
+            $o_chapter = ccnr2\Utility\ChapterPage::parse($s_uri.$a_ret['ref']);
             $a_xml = array(
                 'name' => 'Chapter',
                 'attributes' => array(
