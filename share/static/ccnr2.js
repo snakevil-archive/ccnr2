@@ -299,4 +299,21 @@
     done();
 })
 
+// 加载网络字体
+.once(function ($, done, $_head, _patch) {
+    $_head = $('head'),
+    _patch = function (text) {
+        $('<style rel="stylesheet">' + text + '</text>').appendTo($_head);
+    };
+    $.each(['//fonts.gmirror.org/css?family=Space+Mono:400'], function (index, url) {
+        if (localStorage[url])
+            return _patch(localStorage[url]);
+        $.get(url).done(function (data) {
+            localStorage[url] = data;
+            _patch(data);
+        });
+    });
+    done();
+})
+
 ;
