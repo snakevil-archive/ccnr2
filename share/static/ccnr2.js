@@ -105,6 +105,7 @@
             _this = this;
             if ($('h2').text() == state[1]) return;
             _this.d.title = state[0] + ' ' + state[1] + ' | CCNR v2';
+            $('html').removeClass('prefetched');
             $('.badge').addClass('hidden');
             $('article').html(
                 '<h2>' + state[1] + '</h2>' +
