@@ -64,7 +64,7 @@
         },
 
         // 错误警告
-        e: function (message, _floor, _height, $_error, $_panel, _width, _size) {
+        e: function (message, _floor, _height, _css, $_error, $_panel, _width, _size) {
             $('body').append(
                 '<div class="error"><div class="_"></div>' +
                 '<dl><dt><span class="ico ico-sad"></span></dt>' +
@@ -74,16 +74,17 @@
             );
             _floor = 'floor',
             _height = 'height',
+            _css = 'css',
             $_error = $('.error'),
             $_page = $_error.children('dl'),
-            _width = $_error._width();
+            _width = $_error.width(),
             _size = Math.min(480, _width - 40);
-            $_panel.css({
+            $_panel[_css]({
                 width: _size,
                 left: Math[_floor]((_width - _size) / 2)
             });
-            $_panel.css('top', Math[_floor](($_error[_height]() - $_panel[_height]() - 40) / 2));
-            $_error.css({
+            $_panel[_css]('top', Math[_floor](($_error[_height]() - $_panel[_height]() - 40) / 2));
+            $_error[_css]({
                 top: 0,
                 left: 0
             });
@@ -156,6 +157,27 @@
                 [_addClass](_notop)
                 [_removeClass](_top);
         }
+    });
+    done();
+})
+
+// 加载外部样式
+.once(function ($, done, $_head, _patch) {
+    $_head = $('head'),
+    _patch = function (text) {
+        $('<style rel="stylesheet">' + text + '</text>').appendTo($_head);
+    };
+    $.each([
+        '//cdn.bootcss.com/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css',
+        '//fonts.gmirror.org/css?family=Space+Mono:400'
+    ], function (index, url, _localStorage) {
+        _localStorage = localStorage;
+        if (_localStorage[url])
+            return _patch(_localStorage[url]);
+        $.get(url).done(function (data) {
+            _localStorage[url] = data;
+            _patch(data);
+        });
     });
     done();
 })
@@ -304,23 +326,6 @@
         _this.r(_data);
         $('.badge').addClass('hidden');
         return false;
-    });
-    done();
-})
-
-// 加载网络字体
-.once(function ($, done, $_head, _patch) {
-    $_head = $('head'),
-    _patch = function (text) {
-        $('<style rel="stylesheet">' + text + '</text>').appendTo($_head);
-    };
-    $.each(['//fonts.gmirror.org/css?family=Space+Mono:400'], function (index, url) {
-        if (localStorage[url])
-            return _patch(localStorage[url]);
-        $.get(url).done(function (data) {
-            localStorage[url] = data;
-            _patch(data);
-        });
     });
     done();
 })

@@ -28,7 +28,6 @@
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
       <link href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css" rel="stylesheet" />
-      <link href="//cdn.bootcss.com/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css" rel="stylesheet" />
       <link href="//s.szen.in/n/ccnr2.min.css" rel="stylesheet" />
     </head>
     <body>
