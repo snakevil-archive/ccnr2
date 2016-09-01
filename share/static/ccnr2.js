@@ -100,6 +100,9 @@
         // 按键值记录
         w: -1,
 
+        // 预加载章节数据状态
+        s: false,
+
         // 还原历史状态
         r: function (state, _this, _text) {
             _this = this;
@@ -113,7 +116,8 @@
                     return '<p>' + p + '</p>';
                 }).join('')
             );
-            _this.w = -1;
+            _this.w = -1,
+            _this.s = false;
             $.each(_procedures, function (index, procedure) {
                 _call(_this, procedure[0], procedure[1]);
             });
@@ -261,41 +265,45 @@
 })
 
 // 预加载并历史状态化下一章节
-.on('chapter', function ($, done, _this, _history, _state, _prefetched, _addClass, $_a, _index, $_html, _data, _handler) {
+.on('chapter', function ($, done, _this, _history, _state, _index) {
     _this = this,
     _history = _this.h,
     _state = 'state',
-    _prefetched = 'prefetched',
-    _addClass = 'addClass',
-    $_a = $('aside a:last'),
-    _index = $_a.attr('href');
+    _index = $('aside a:last').attr('href');
     if (!_history[_state] || '#' == _index)
         return done();
-    $_html = $('html');
-    _data = [
+    _this.s = [
         _history[_state][0],
         '',
         []
     ];
-    $_a.one('click', function () {
-        if (!$_html.hasClass(_prefetched))
-            return true;
-        $_html.removeClass(_prefetched);
-        _history.pushState(_data, '', _index);
-        window.scrollTo(0, 0);
-        _this.r(_data);
-        $('.badge')[_addClass]('hidden');
-        return false;
-    });
     $.get(_index).done(function (xml, _find, _text, $_xml) {
         _find = 'find',
         _text = 'text',
         $_xml = $(xml);
-        _data[1] = $_xml[_find]('Title')[_text]();
+        _this.s[1] = $_xml[_find]('Title')[_text]();
         $_xml[_find]('Paragraph').each(function (index, p) {
-            _data[2].push($(p)[_text]());
+            _this.s[2].push($(p)[_text]());
         });
-        $_html[_addClass](_prefetched);
+        $('html').addClass('prefetched');
+    });
+    done();
+})
+
+// 调整已预加载地章节的切换模式
+.once('chapter', function ($, done, _this, $_a) {
+    _this = this,
+    $_a = $('aside a:last');
+    $_a.click(function (_data) {
+        if (!$('html').hasClass('prefetched'))
+            return true;
+        _data = _this.s;
+        _this.s = false;
+        _this.h.pushState(_data, '', $_a.attr('href'));
+        window.scrollTo(0, 0);
+        _this.r(_data);
+        $('.badge').addClass('hidden');
+        return false;
     });
     done();
 })
