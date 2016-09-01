@@ -37,13 +37,27 @@ header {
     color: $color_bg;
 }
 
-ol a {
+fieldset a {
     &:visited {
         color: lighten($color, 25%);
     }
 
     &:hover {
         color: darken($color_hi, 50%);
+    }
+}
+
+legend {
+    &:after {
+        color: $color_disabled;
+    }
+
+    a {
+        border-bottom: 1px solid $color;
+
+        &:hover {
+            border-color: darken($color_hi, 50%);
+        }
     }
 }
 

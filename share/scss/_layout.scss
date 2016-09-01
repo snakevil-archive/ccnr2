@@ -72,9 +72,31 @@ h1 {
     }
 }
 
+section > nav {
+    padding: 5.5rem 0 3rem 0;
+}
+
+fieldset {
+    border: 0;
+
+    a {
+        padding: .5rem 0;
+    }
+}
+
+legend {
+    width: 100%;
+    display: none;
+
+    &:after {
+        content: '……';
+        display: block;
+        padding: .5rem 1rem;
+    }
+}
+
 ol {
     margin: 0 -.5rem;
-    padding: 5.5rem 0 3rem 0;
 
     .scrolled & {
         padding-top: 0;
@@ -84,10 +106,6 @@ ol {
         width: 50%;
         padding-left: .5rem;
         padding-right: .5rem;
-    }
-
-    a {
-        padding: .5rem 0;
     }
 }
 
@@ -167,6 +185,16 @@ dd:last-child {
 }
 
 @media screen and (max-width: 639px) {
+    fieldset {
+        & legend, &.expanded ol {
+            display: block;
+        }
+
+        &.expanded legend, & ol {
+            display: none;
+        }
+    }
+
     ol li {
         width: 100%;
     }

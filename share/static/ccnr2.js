@@ -126,6 +126,14 @@
     };
 }(jQuery))
 
+// 赋予章节列表片段展开功能
+.once('toc', function ($, done) {
+    $('legend a').click(function () {
+        $(this).closest('fieldset').addClass('expanded');
+        return false;
+    });
+})
+
 // 赋予「返回页首」按钮功能（检测页面是否发生滚屏）
 .once(function ($, done, _scrolled, _disabled, _span, _top, _notop, _hasClass, _addClass, _removeClass, _children, $_body, $_html, $_top) {
     _scrolled = 'scrolled',
