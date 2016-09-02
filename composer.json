@@ -26,6 +26,9 @@
         "zen/view": "*",
         "snakevil/zen": "@dev"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^5.5"
+    },
     "autoload": {
         "psr-4": {
             "snakevil\\ccnr2\\": "lib/"
@@ -39,5 +42,11 @@
     "scripts": {
         "css": "sass -t compressed share/scss/main.scss:share/static/ccnr2.min.css",
         "js": "cd share/static; uglifyjs ccnr2.js -c -m -o ccnr2.min.js --source-map ccnr2.min.js.map"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
     }
 }
