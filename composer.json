@@ -2,10 +2,7 @@
     "name": "snakevil/ccnr2",
     "description": "Clear & Clean Novel Reader v2",
     "type": "project",
-    "license": [
-        "GPL-3.0+",
-        "CC-BY-NC-ND-3.0"
-    ],
+    "license": "GPL-3.0+",
     "authors": [
         {
             "name": "Snakevil Zen",
@@ -14,12 +11,10 @@
     ],
     "require": {
         "ext-curl": "*",
-        "ext-dom": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-SimpleXML": "*",
         "ext-xmlwriter": "*",
-        "ext-xsl": "*",
         "zen/core": "*",
         "zen/web-application": "*",
         "zen/model": "*",
@@ -34,6 +29,17 @@
             "snakevil\\ccnr2\\": "lib/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "snakevil\\ccnr2Test\\": "share/test"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    },
     "config": {
         "preferred-install": "dist",
         "vendor-dir": "include",
@@ -41,12 +47,10 @@
     },
     "scripts": {
         "css": "sass -t compressed share/scss/main.scss:share/static/ccnr2.min.css",
-        "js": "cd share/static; uglifyjs ccnr2.js -c -m -o ccnr2.min.js --source-map ccnr2.min.js.map"
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
-        }
+        "js": "cd share/static; uglifyjs ccnr2.js -c -m -o ccnr2.min.js --source-map ccnr2.min.js.map",
+        "test": [
+            "@composer install",
+            "phpunit --testdox"
+        ]
     }
 }
