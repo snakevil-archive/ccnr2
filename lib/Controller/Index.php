@@ -26,7 +26,7 @@ class Index extends ccnr2\Component\Controller
      */
     protected function onGET()
     {
-        if (preg_match('|^[a-z]+=(http://)?(\w+\.)+\w+/.+$|', $this->input['server:QUERY_STRING'])) {
+        if (preg_match('|^[a-z\d]+=(http://)?(\w+\.)+\w+/.+$|', $this->input['server:QUERY_STRING'])) {
             $o_ctrl = new NovelFound($this->appliance);
 
             return $o_ctrl->act($this->token);
