@@ -8,7 +8,7 @@
  * @license   CC-BY-NC-ND-3.0
  */
 
-namespace snakevil\ccnr2\Driver\_27zw;
+namespace snakevil\ccnr2\Driver\_37zw;
 
 use snakevil\ccnr2;
 
