@@ -46,7 +46,7 @@
         "bin-dir": "bin"
     },
     "scripts": {
-        "css": "sass -t compressed share/scss/main.scss:share/static/ccnr2.min.css",
+        "css": "sassc -mt compressed share/scss/main.scss share/static/ccnr2.min.css",
         "js": "cd share/static; uglifyjs ccnr2.js -c -m -o ccnr2.min.js --source-map ccnr2.min.js.map",
         "test": [
             "@composer install",

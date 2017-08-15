@@ -27,7 +27,6 @@
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
       />
       <link rel="icon" href="//s.szen.in/n/icon.png" />
-      <link href="//cdn.bootcss.com/normalize/4.2.0/normalize.min.css" rel="stylesheet" />
       <link href="//s.szen.in/n/ccnr2.min.css" rel="stylesheet" />
     </head>
     <body>
@@ -41,7 +40,7 @@
         <address>by CCNRv2</address>
         <div class="progress"></div>
       </footer>
-      <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+      <script src="//s.szen.in/lib/jquery/3.2.1/jquery.min.js"></script>
       <script src="//s.szen.in/n/ccnr2.min.js"></script>
     </body>
     </html>
