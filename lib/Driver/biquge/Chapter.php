@@ -1,19 +1,19 @@
 <?php
 /**
- * 定义UU看书站小说章节页内容分析组件。
+ * 定义笔趣阁小说章节页内容分析组件。
  *
  * @author    Snakevil Zen <zsnakevil@gmail.com>
- * @copyright © 2014 SZen.in
+ * @copyright © 2019 SZen.in
  * @license   GPL-3.0+
  * @license   CC-BY-NC-ND-3.0
  */
 
-namespace snakevil\ccnr2\Driver\uukanshu;
+namespace snakevil\ccnr2\Driver\biquge;
 
 use snakevil\ccnr2;
 
 /**
- * UU看书站小说章节页内容分析组件。
+ * 笔趣阁小说章节页内容分析组件。
  *
  * @package snakevil\ccnr2
  * @version 2.0.0
@@ -32,31 +32,28 @@ class Chapter extends ccnr2\Utility\PageDriver
      */
     protected function parse($clob)
     {
-        $clob = iconv('gb18030', 'utf-8//IGNORE', $clob);
         $a_ret = array();
-        $s_regex = '@<h1 id="timu">([^<]+)</h1>@U';
+        $s_regex = '@<h1>(.+)</h1>@Ui';
         $a_match = $this->estrstr($clob, $s_regex);
         if (!isset($a_match[1])) {
             throw new ccnr2\Driver\ExChapterTitleNotFound($this->ref, $s_regex);
         }
         $a_ret['title'] = $this->trim($a_match[1]);
-        $s_regex = '@<span id="contentbox">@';
-        $a_match = $this->estrstr($clob, $s_regex);
-        if (false === $a_match) {
-            throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
-        }
-        $s_regex = '@</span>@';
+        $s_regex = '@<div class="bottem">@';
         $a_match = $this->estrstr($clob, $s_regex, true);
         if (false === $a_match) {
             throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
         }
-        $s_regex = '@(?:(?:&nbsp;){4}|　　)(.+)(?:<br(?:| ?/)>|<!--|\n)@U';
+        $s_regex = '@(?:&nbsp;){4}(.+)(?:<br/>|\n</div>)@U';
         if (false === preg_match_all($s_regex, $clob, $a_match)) {
             throw new ccnr2\Driver\ExChapterParagraphsNotFound($this->ref, $s_regex);
         }
         $a_ret['paragraphs'] = array();
         for ($ii = 0, $jj = count($a_match[1]); $ii < $jj; $ii++) {
-            $a_match[1][$ii] = $this->trim(preg_replace('@^(?:<br(?:| ?/)>　　)+(?:&nbsp;)*@', '', $a_match[1][$ii]));
+            $a_match[1][$ii] = $this->trim($a_match[1][$ii]);
+            if (0 === strpos($a_match[1][$ii], '温馨提示：')) {
+                continue;
+            }
             if ('' != $a_match[1][$ii]) {
                 $a_ret['paragraphs'][] = $a_match[1][$ii];
             }
